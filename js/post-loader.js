@@ -82,7 +82,7 @@ function loadGiscus() {
     script.src = 'https://giscus.app/client.js';
     
     // NOTE TO USER: Replace these with your actual IDs from giscus.app
-    script.setAttribute('data-repo', 'ryujooh/git_test');
+    script.setAttribute('data-repo', 'ryujooh/ryujooh.github.io');
     script.setAttribute('data-repo-id', 'YOUR_REPO_ID'); 
     script.setAttribute('data-category', 'General');
     script.setAttribute('data-category-id', 'YOUR_CATEGORY_ID');

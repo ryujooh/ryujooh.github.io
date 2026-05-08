@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function loadConfig() {
     document.getElementById('gh-username').value = localStorage.getItem(STORAGE_KEYS.USER) || '';
-    document.getElementById('gh-repo').value = localStorage.getItem(STORAGE_KEYS.REPO) || 'git_test';
+    document.getElementById('gh-repo').value = localStorage.getItem(STORAGE_KEYS.REPO) || 'ryujooh.github.io';
     document.getElementById('gh-token').value = localStorage.getItem(STORAGE_KEYS.TOKEN) || '';
 }
 
