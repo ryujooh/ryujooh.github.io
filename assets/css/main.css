@@ -16,7 +16,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     line-height: 1.8;
-    font-weight: 200; /* Extra light / Thin */
+    font-weight: 200; 
     padding: 10% 5%;
     word-break: keep-all;
     -webkit-font-smoothing: antialiased;
