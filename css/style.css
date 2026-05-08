@@ -7,6 +7,7 @@
     --muted: #999999;
     --border-dotted: #cccccc;
     --border-solid: #000000;
+    --accent: #000000;
 }
 
 [data-theme="dark"] {
@@ -15,6 +16,7 @@
     --muted: #777777;
     --border-dotted: #333333;
     --border-solid: #ffffff;
+    --accent: #ffffff;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,7 +54,6 @@ h1 {
 
 h1 a { text-decoration: none; color: var(--text); }
 
-/* Theme Toggle */
 #theme-toggle {
     background: none;
     border: none;
@@ -60,9 +61,11 @@ h1 a { text-decoration: none; color: var(--text); }
     font-size: 1.2rem;
     color: var(--text);
     opacity: 0.5;
+    transition: opacity 0.2s;
 }
+#theme-toggle:hover { opacity: 1; }
 
-/* Post List */
+/* Search & Tags */
 .search-wrapper { margin-bottom: 3rem; }
 #search-input {
     width: 100%;
@@ -84,9 +87,11 @@ h1 a { text-decoration: none; color: var(--text); }
     cursor: pointer;
     color: var(--muted);
     border-radius: 2rem;
+    transition: all 0.2s;
 }
 .tag.active { border-style: solid; color: var(--text); border-color: var(--border-solid); }
 
+/* Post List */
 .post-list { list-style: none; }
 .post-item {
     margin-bottom: 3rem;
@@ -116,33 +121,7 @@ h1 a { text-decoration: none; color: var(--text); }
 .markdown-body { font-size: 1.1rem; }
 .markdown-body p { margin-bottom: 2rem; }
 .markdown-body img { max-width: 100%; filter: grayscale(100%); margin: 2rem 0; }
-
-/* Admin UI */
-.admin-card { border: 1px solid var(--border-solid); padding: 2rem; margin-bottom: 2rem; }
-.form-group { margin-bottom: 1.5rem; }
-label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
-input[type="text"], input[type="password"], textarea {
-    width: 100%;
-    padding: 0.75rem 0;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border-dotted);
-    color: var(--text);
-    font-family: inherit;
-    font-weight: 200;
-    outline: none;
-}
-textarea { height: 300px; border: 1px solid var(--border-dotted); padding: 1rem; }
-button {
-    background: var(--text);
-    color: var(--bg);
-    border: none;
-    padding: 0.75rem 2rem;
-    cursor: pointer;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
+.markdown-body h2 { margin: 3rem 0 1rem; font-weight: 400; border-bottom: 1px solid var(--border-solid); display: inline-block; }
 
 footer {
     margin-top: 10rem;
@@ -154,6 +133,5 @@ footer {
     text-transform: uppercase;
     letter-spacing: 0.2em;
 }
-footer a { color: inherit; text-decoration: none; }
 
-.loading { text-align: center; padding: 4rem; color: var(--muted); }
+.loading { text-align: center; padding: 4rem; color: var(--muted); font-style: italic; }

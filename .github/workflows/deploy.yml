@@ -32,13 +32,13 @@ jobs:
       - name: Generate posts.json
         run: node .github/scripts/generate-posts.js
 
-      - name: Commit and Push posts.json
+      - name: Commit posts.json
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add posts.json
-          git commit -m "chore: auto-generate posts.json [skip ci]" || echo "No changes to commit"
-          git push origin main || echo "No changes to push"
+          git commit -m "chore: auto-generate posts.json [skip ci]" || echo "No changes"
+          git push origin main || echo "No changes"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
