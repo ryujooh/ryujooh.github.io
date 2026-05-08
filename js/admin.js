@@ -1,134 +1,70 @@
-// Robust Admin Logic for ryujooh.github.io
-const CONFIG_KEYS = {
-    USER: 'gh_user',
-    REPO: 'gh_repo',
-    TOKEN: 'gh_token'
-};
+// Ryujooh - Admin Logic
+const CONFIG_KEY = 'gh_token_vanilla';
 
-document.addEventListener('DOMContentLoaded', () => {
-    initForm();
-    
-    // Check for edit parameter
-    const params = new URLSearchParams(window.location.search);
-    const editFile = params.get('edit');
-    
-    if (editFile) {
-        // Need to wait for post list or fetch SHA
-        loadPostForEdit(editFile);
-    } else {
-        fetchPostList();
-    }
-});
-
-function initForm() {
-    document.getElementById('gh-user').value = localStorage.getItem(CONFIG_KEYS.USER) || 'ryujooh';
-    document.getElementById('gh-repo').value = localStorage.getItem(CONFIG_KEYS.REPO) || 'ryujooh.github.io';
-    document.getElementById('gh-token').value = localStorage.getItem(CONFIG_KEYS.TOKEN) || '';
+function loadConfig() {
+    document.getElementById('gh-token').value = localStorage.getItem(CONFIG_KEY) || '';
 }
 
-function updateConfig() {
-    const user = document.getElementById('gh-user').value.trim();
-    const repo = document.getElementById('gh-repo').value.trim();
+function saveConfig() {
     const token = document.getElementById('gh-token').value.trim();
-
-    if (!user || !repo || !token) {
-        showStatus('Please enter all GitHub settings.', 'error');
-        return;
-    }
-
-    localStorage.setItem(CONFIG_KEYS.USER, user);
-    localStorage.setItem(CONFIG_KEYS.REPO, repo);
-    localStorage.setItem(CONFIG_KEYS.TOKEN, token);
-
-    showStatus('Settings saved!', 'success');
-    fetchPostList();
+    localStorage.setItem(CONFIG_KEY, token);
+    alert('Token saved!');
 }
 
 async function fetchPostList() {
-    const user = localStorage.getItem(CONFIG_KEYS.USER);
-    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
-    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
-    const tableBody = document.getElementById('post-table-body');
+    const user = 'ryujooh';
+    const repo = 'ryujooh.github.io';
+    const token = localStorage.getItem(CONFIG_KEY);
+    const listDiv = document.getElementById('post-list-admin');
 
-    if (!user || !repo || !token) {
-        tableBody.innerHTML = '<tr><td colspan="2">Please configure settings above.</td></tr>';
-        return;
-    }
+    if (!token) { listDiv.innerHTML = 'Token required.'; return; }
 
     try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages`, {
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages`, {
             headers: { 'Authorization': `token ${token}` }
         });
+        const files = await res.json();
+        const posts = files.filter(f => f.name.endsWith('.md'));
 
-        if (response.status === 404) {
-            tableBody.innerHTML = '<tr><td colspan="2">Pages folder not found or empty.</td></tr>';
-            return;
-        }
-
-        if (!response.ok) throw new Error('API Error: ' + response.statusText);
-
-        const files = await response.json();
-        const posts = files.filter(f => f.name.endsWith('.md') && f.name !== '.gitkeep');
-
-        if (posts.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="2">No posts found.</td></tr>';
-            return;
-        }
-
-        tableBody.innerHTML = posts.map(post => `
-            <tr>
-                <td><strong>${post.name.replace('.md', '')}</strong></td>
-                <td>
-                    <div style="display:flex; gap: 0.5rem;">
-                        <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="loadPostForEdit('${post.name}', '${post.sha}')">Edit</button>
-                        <button class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: #fee2e2;" onclick="deletePost('${post.name}', '${post.sha}')">Delete</button>
-                    </div>
-                </td>
-            </tr>
+        listDiv.innerHTML = posts.map(p => `
+            <div class="post-item-admin">
+                <span>${p.name}</span>
+                <div>
+                    <button class="btn-small" onclick="loadForEdit('${p.name}', '${p.sha}')">EDIT</button>
+                    <button class="btn-small btn-delete" onclick="deletePost('${p.name}', '${p.sha}')">DELETE</button>
+                </div>
+            </div>
         `).join('');
-
-    } catch (err) {
-        showStatus('Failed to load posts: ' + err.message, 'error');
-    }
+    } catch (e) { listDiv.innerHTML = 'Error loading posts.'; }
 }
 
-async function loadPostForEdit(filename, sha) {
-    const user = localStorage.getItem(CONFIG_KEYS.USER);
-    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
-    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
+async function loadForEdit(filename, sha) {
+    const user = 'ryujooh';
+    const repo = 'ryujooh.github.io';
+    const token = localStorage.getItem(CONFIG_KEY);
 
     try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${filename}`, {
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${filename}`, {
             headers: { 'Authorization': `token ${token}` }
         });
+        const data = await res.json();
+        const content = decodeURIComponent(escape(atob(data.content)));
 
-        if (!response.ok) throw new Error('Failed to fetch post content');
+        const { metadata, body } = parseFrontMatter(content);
 
-        const data = await response.json();
-        const content = utf8_atob(data.content);
-        
-        const { metadata, body } = parseMarkdown(content);
-
-        // Fill Form
         document.getElementById('edit-filename').value = filename;
         document.getElementById('edit-sha').value = sha;
-        document.getElementById('post-title').value = metadata.title || filename.replace('.md', '');
+        document.getElementById('post-title').value = metadata.title || '';
         document.getElementById('post-category').value = metadata.category || '';
-        document.getElementById('post-tags').value = (metadata.tags || []).join(', ');
-        document.getElementById('post-body').value = body.trim();
+        document.getElementById('post-tags').value = (metadata.tags || '').toString();
+        document.getElementById('post-content').value = body.trim();
 
-        // Update UI
-        document.getElementById('form-mode').textContent = 'Edit Mode';
-        document.getElementById('form-mode').className = 'mode-indicator mode-edit';
-        document.getElementById('editor-title').textContent = 'Edit Post';
-        document.getElementById('save-btn').textContent = 'Save Changes';
-        document.getElementById('cancel-btn').style.display = 'inline-flex';
+        document.getElementById('editor-title').textContent = 'EDIT POST';
+        document.getElementById('save-btn').textContent = 'SAVE CHANGES';
+        document.getElementById('cancel-btn').style.display = 'inline-block';
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    } catch (err) {
-        showStatus(err.message, 'error');
-    }
+    } catch (e) { alert('Failed to load post.'); }
 }
 
 function resetForm() {
@@ -137,155 +73,73 @@ function resetForm() {
     document.getElementById('post-title').value = '';
     document.getElementById('post-category').value = '';
     document.getElementById('post-tags').value = '';
-    document.getElementById('post-body').value = '';
-
-    document.getElementById('form-mode').textContent = 'Create Mode';
-    document.getElementById('form-mode').className = 'mode-indicator mode-create';
-    document.getElementById('editor-title').textContent = 'Write New Post';
-    document.getElementById('save-btn').textContent = 'Publish Post';
+    document.getElementById('post-content').value = '';
+    document.getElementById('editor-title').textContent = 'NEW POST';
+    document.getElementById('save-btn').textContent = 'PUBLISH';
     document.getElementById('cancel-btn').style.display = 'none';
 }
 
 async function savePost() {
-    const title = document.getElementById('post-title').value.trim();
-    const category = document.getElementById('post-category').value.trim();
-    const tagsStr = document.getElementById('post-tags').value.trim();
-    const body = document.getElementById('post-body').value.trim();
-    
+    const title = document.getElementById('post-title').value;
+    const body = document.getElementById('post-content').value;
     const editFilename = document.getElementById('edit-filename').value;
     const editSha = document.getElementById('edit-sha').value;
+    const token = localStorage.getItem(CONFIG_KEY);
 
-    if (!title || !body) {
-        showStatus('Title and Content are required.', 'error');
-        return;
-    }
+    if (!title || !body || !token) { alert('Missing info or token'); return; }
 
-    const user = localStorage.getItem(CONFIG_KEYS.USER);
-    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
-    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
-
-    const fileName = editFilename || (slugify(title) + '.md');
-    const date = new Date().toISOString().split('T')[0];
-    const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
-
-    const fullContent = `---
-title: '${title}'
-date: '${date}'
-tags: ${JSON.stringify(tags)}
-category: '${category}'
+    const dateStr = new Date().toISOString().split('T')[0];
+    const filename = editFilename || `${dateStr}-${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`;
+    
+    const fileContent = `---
+title: "${title}"
+date: ${dateStr}
+category: "${document.getElementById('post-category').value}"
+tags: [${document.getElementById('post-tags').value}]
 ---
 
 ${body}`;
 
-    const saveBtn = document.getElementById('save-btn');
-    saveBtn.disabled = true;
-    saveBtn.textContent = 'Saving...';
+    const payload = {
+        message: editFilename ? `Update: ${title}` : `Create: ${title}`,
+        content: btoa(unescape(encodeURIComponent(fileContent)))
+    };
+    if (editSha) payload.sha = editSha;
 
     try {
-        const payload = {
-            message: editFilename ? `Update post: ${title}` : `Create post: ${title}`,
-            content: utf8_btoa(fullContent)
-        };
-
-        if (editSha) payload.sha = editSha;
-
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${fileName}`, {
+        const res = await fetch(`https://api.github.com/repos/ryujooh/ryujooh.github.io/contents/pages/${filename}`, {
             method: 'PUT',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Failed to save post');
-        }
-
-        showStatus(editFilename ? 'Post updated successfully!' : 'Post published successfully!', 'success');
-        resetForm();
-        fetchPostList();
-
-    } catch (err) {
-        showStatus(err.message, 'error');
-    } finally {
-        saveBtn.disabled = false;
-        saveBtn.textContent = editFilename ? 'Save Changes' : 'Publish Post';
-    }
+        if (res.ok) {
+            alert('Success!');
+            resetForm();
+            fetchPostList();
+        } else { alert('Failed to save.'); }
+    } catch (e) { alert('Error occurred.'); }
 }
 
 async function deletePost(name, sha) {
-    if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
-
-    const user = localStorage.getItem(CONFIG_KEYS.USER);
-    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
-    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
-
+    if (!confirm(`Delete ${name}?`)) return;
+    const token = localStorage.getItem(CONFIG_KEY);
     try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${name}`, {
+        const res = await fetch(`https://api.github.com/repos/ryujooh/ryujooh.github.io/contents/pages/${name}`, {
             method: 'DELETE',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                message: `Delete post: ${name}`,
-                sha: sha
-            })
+            headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: `Delete: ${name}`, sha: sha })
         });
-
-        if (!response.ok) throw new Error('Delete failed');
-
-        showStatus('Post deleted successfully.', 'success');
-        fetchPostList();
-    } catch (err) {
-        showStatus(err.message, 'error');
-    }
+        if (res.ok) { alert('Deleted!'); fetchPostList(); }
+    } catch (e) { alert('Error.'); }
 }
 
-// Helpers
-function utf8_btoa(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
-}
-
-function utf8_atob(str) {
-    return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-}
-
-function parseMarkdown(content) {
+function parseFrontMatter(content) {
     const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
     if (!match) return { metadata: {}, body: content };
-    
     const metadata = {};
     match[1].split('\n').forEach(line => {
-        const parts = line.split(':');
-        if (parts.length >= 2) {
-            const key = parts[0].trim();
-            let val = parts.slice(1).join(':').trim().replace(/^['"]|['"]$/g, '');
-            if (val.startsWith('[') && val.endsWith(']')) {
-                val = val.slice(1, -1).split(',').map(v => v.trim().replace(/^['"]|['"]$/g, ''));
-            }
-            metadata[key] = val;
-        }
+        const [key, ...val] = line.split(':');
+        if (key && val.length) metadata[key.trim()] = val.join(':').trim().replace(/^['"]|['"]$/g, '');
     });
     return { metadata, body: match[2] };
-}
-
-function slugify(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           
-        .replace(/[^\w\uAC00-\uD7A3-]+/g, '') 
-        .replace(/--+/g, '-')           
-        .replace(/^-+/, '')             
-        .replace(/-+$/, '');            
-}
-
-function showStatus(msg, type) {
-    const el = document.getElementById('status-msg');
-    el.textContent = msg;
-    el.style.display = 'block';
-    el.style.backgroundColor = type === 'success' ? '#dcfce7' : '#fee2e2';
-    el.style.color = type === 'success' ? '#166534' : '#991b1b';
-    setTimeout(() => { el.style.display = 'none'; }, 5000);
 }

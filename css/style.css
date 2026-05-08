@@ -1,0 +1,159 @@
+/* Modern Minimalist B&W Style with Pretendard */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+
+:root {
+    --bg: #ffffff;
+    --text: #111111;
+    --muted: #999999;
+    --border-dotted: #cccccc;
+    --border-solid: #000000;
+}
+
+[data-theme="dark"] {
+    --bg: #111111;
+    --text: #f0f0f0;
+    --muted: #777777;
+    --border-dotted: #333333;
+    --border-solid: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 200;
+    padding: 10% 5%;
+    transition: background 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+}
+
+h1 a { text-decoration: none; color: var(--text); }
+
+/* Theme Toggle */
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text);
+    opacity: 0.5;
+}
+
+/* Post List */
+.search-wrapper { margin-bottom: 3rem; }
+#search-input {
+    width: 100%;
+    padding: 0.75rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-solid);
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+.tag-cloud { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px dotted var(--border-dotted);
+    cursor: pointer;
+    color: var(--muted);
+    border-radius: 2rem;
+}
+.tag.active { border-style: solid; color: var(--text); border-color: var(--border-solid); }
+
+.post-list { list-style: none; }
+.post-item {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dotted var(--border-dotted);
+}
+.post-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 100;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+.post-link {
+    font-size: 1.35rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 300;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.post-excerpt { color: var(--muted); font-size: 0.95rem; font-weight: 200; }
+
+/* Post Detail */
+.post-header { margin-bottom: 4rem; }
+.post-title { font-size: 2.5rem; font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; margin-bottom: 1rem; }
+.markdown-body { font-size: 1.1rem; }
+.markdown-body p { margin-bottom: 2rem; }
+.markdown-body img { max-width: 100%; filter: grayscale(100%); margin: 2rem 0; }
+
+/* Admin UI */
+.admin-card { border: 1px solid var(--border-solid); padding: 2rem; margin-bottom: 2rem; }
+.form-group { margin-bottom: 1.5rem; }
+label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 0.75rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-dotted);
+    color: var(--text);
+    font-family: inherit;
+    font-weight: 200;
+    outline: none;
+}
+textarea { height: 300px; border: 1px solid var(--border-dotted); padding: 1rem; }
+button {
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+footer {
+    margin-top: 10rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-dotted);
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+footer a { color: inherit; text-decoration: none; }
+
+.loading { text-align: center; padding: 4rem; color: var(--muted); }

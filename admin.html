@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Ryujooh</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        #admin-panel { display: none; }
+        .login-box { margin-top: 100px; text-align: center; }
+        .post-item-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #ccc; padding: 15px 0; }
+        .btn-small { padding: 5px 10px; font-size: 0.7rem; border: 1px solid #ccc; background: none; cursor: pointer; margin-left: 5px; }
+        .btn-delete { color: #ef4444; border-color: #fee2e2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login -->
+        <div id="login-section" class="login-box">
+            <h1>AUTHENTICATION</h1>
+            <input type="password" id="password" placeholder="PASSWORD" style="text-align: center; width: 200px; margin: 2rem 0;">
+            <br>
+            <button onclick="checkPassword()">LOGIN</button>
+        </div>
+
+        <!-- Admin -->
+        <div id="admin-panel">
+            <header>
+                <h1>ADMIN DASHBOARD</h1>
+            </header>
+
+            <section class="admin-card">
+                <h3>SETTINGS</h3>
+                <input type="text" id="gh-token" placeholder="GITHUB PERSONAL ACCESS TOKEN" style="margin-bottom: 1rem;">
+                <button onclick="saveConfig()">SAVE TOKEN</button>
+            </section>
+
+            <section class="admin-card">
+                <h3 id="editor-title">NEW POST</h3>
+                <input type="hidden" id="edit-filename">
+                <input type="hidden" id="edit-sha">
+                
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="post-title">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="post-category">
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" id="post-tags">
+                </div>
+                <div class="form-group">
+                    <label>Content (Markdown)</label>
+                    <textarea id="post-content"></textarea>
+                </div>
+                <button id="save-btn" onclick="savePost()">PUBLISH</button>
+                <button id="cancel-btn" style="display: none; background: #eee; color: #333;" onclick="resetForm()">CANCEL</button>
+            </section>
+
+            <section style="margin-top: 5rem;">
+                <h3>EXISTING POSTS</h3>
+                <div id="post-list-admin">Loading...</div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        function checkPassword() {
+            if (document.getElementById('password').value === '7374') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                loadConfig();
+                fetchPostList();
+            } else { alert('WRONG PASSWORD'); }
+        }
+    </script>
+</body>
+</html>

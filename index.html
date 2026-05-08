@@ -1,40 +1,43 @@
----
-layout: default
----
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.title }}</title>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+    <title>Ryujooh</title>
+    
+    <!-- Prism.js -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+            <h1><a href="index.html">Ryujooh</a></h1>
+            <button id="theme-toggle" title="Toggle Theme">🌓</button>
         </header>
 
         <main>
-            <ul class="post-list">
-                {% for post in site.posts %}
-                <li class="post-item">
-                    <div class="post-meta">
-                        {{ post.date | date: "%Y. %m. %d" }} / {{ post.category }}
-                    </div>
-                    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                </li>
-                {% endfor %}
+            <section class="search-wrapper">
+                <input type="text" id="search-input" placeholder="search posts...">
+            </section>
+
+            <div id="tag-cloud" class="tag-cloud">
+                <!-- Tags will be loaded here -->
+            </div>
+
+            <ul id="post-list" class="post-list">
+                <div class="loading">loading posts...</div>
             </ul>
         </main>
 
-        <div class="admin-actions">
-            <a href="https://github.com/{{ site.repository }}/new/{{ site.branch }}/_posts" target="_blank">[New Post]</a>
-        </div>
-
         <footer>
-            &copy; {{ site.time | date: "%Y" }} {{ site.title }}
+            &copy; 2025 Ryujooh. <a href="admin.html">admin</a>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
