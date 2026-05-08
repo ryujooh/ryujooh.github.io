@@ -1,47 +1,47 @@
-// Admin Logic for admin.html
-const STORAGE_KEYS = {
+// Robust Admin Logic for ryujooh.github.io
+const CONFIG_KEYS = {
     USER: 'gh_user',
     REPO: 'gh_repo',
     TOKEN: 'gh_token'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadConfig();
-    fetchPosts();
+    initForm();
+    fetchPostList();
 });
 
-function loadConfig() {
-    document.getElementById('gh-username').value = localStorage.getItem(STORAGE_KEYS.USER) || '';
-    document.getElementById('gh-repo').value = localStorage.getItem(STORAGE_KEYS.REPO) || 'ryujooh.github.io';
-    document.getElementById('gh-token').value = localStorage.getItem(STORAGE_KEYS.TOKEN) || '';
+function initForm() {
+    document.getElementById('gh-user').value = localStorage.getItem(CONFIG_KEYS.USER) || 'ryujooh';
+    document.getElementById('gh-repo').value = localStorage.getItem(CONFIG_KEYS.REPO) || 'ryujooh.github.io';
+    document.getElementById('gh-token').value = localStorage.getItem(CONFIG_KEYS.TOKEN) || '';
 }
 
-function saveConfig() {
-    const user = document.getElementById('gh-username').value.trim();
+function updateConfig() {
+    const user = document.getElementById('gh-user').value.trim();
     const repo = document.getElementById('gh-repo').value.trim();
     const token = document.getElementById('gh-token').value.trim();
 
     if (!user || !repo || !token) {
-        showStatus('Please fill in all configuration fields.', 'error');
+        showStatus('Please enter all GitHub settings.', 'error');
         return;
     }
 
-    localStorage.setItem(STORAGE_KEYS.USER, user);
-    localStorage.setItem(STORAGE_KEYS.REPO, repo);
-    localStorage.setItem(STORAGE_KEYS.TOKEN, token);
+    localStorage.setItem(CONFIG_KEYS.USER, user);
+    localStorage.setItem(CONFIG_KEYS.REPO, repo);
+    localStorage.setItem(CONFIG_KEYS.TOKEN, token);
 
-    showStatus('Configuration saved successfully!', 'success');
-    fetchPosts();
+    showStatus('Settings saved!', 'success');
+    fetchPostList();
 }
 
-async function fetchPosts() {
-    const user = localStorage.getItem(STORAGE_KEYS.USER);
-    const repo = localStorage.getItem(STORAGE_KEYS.REPO);
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
-    const listContainer = document.getElementById('admin-post-list');
+async function fetchPostList() {
+    const user = localStorage.getItem(CONFIG_KEYS.USER);
+    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
+    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
+    const tableBody = document.getElementById('post-table-body');
 
     if (!user || !repo || !token) {
-        listContainer.innerHTML = '<p>Please configure GitHub settings above to see posts.</p>';
+        tableBody.innerHTML = '<tr><td colspan="2">Please configure settings above.</td></tr>';
         return;
     }
 
@@ -50,72 +50,78 @@ async function fetchPosts() {
             headers: { 'Authorization': `token ${token}` }
         });
 
-        if (!response.ok) throw new Error('Failed to fetch pages directory');
-
-        const files = await response.json();
-        const mdFiles = files.filter(f => f.name.endsWith('.md'));
-
-        if (mdFiles.length === 0) {
-            listContainer.innerHTML = '<p>No posts found in /pages directory.</p>';
+        if (response.status === 404) {
+            tableBody.innerHTML = '<tr><td colspan="2">Pages folder not found or empty.</td></tr>';
             return;
         }
 
-        listContainer.innerHTML = mdFiles.map(file => `
-            <div class="post-item">
-                <span>${file.name}</span>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn" onclick="startEdit('${file.name}', '${file.sha}')">Edit</button>
-                    <button class="btn btn-danger" onclick="deletePost('${file.name}', '${file.sha}')">Delete</button>
-                </div>
-            </div>
+        if (!response.ok) throw new Error('API Error: ' + response.statusText);
+
+        const files = await response.json();
+        const posts = files.filter(f => f.name.endsWith('.md') && f.name !== '.gitkeep');
+
+        if (posts.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="2">No posts found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = posts.map(post => `
+            <tr>
+                <td><strong>${post.name.replace('.md', '')}</strong></td>
+                <td>
+                    <div style="display:flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="loadPostForEdit('${post.name}', '${post.sha}')">Edit</button>
+                        <button class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: #fee2e2;" onclick="deletePost('${post.name}', '${post.sha}')">Delete</button>
+                    </div>
+                </td>
+            </tr>
         `).join('');
 
-    } catch (error) {
-        console.error(error);
-        listContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+    } catch (err) {
+        showStatus('Failed to load posts: ' + err.message, 'error');
     }
 }
 
-async function startEdit(name, sha) {
-    const user = localStorage.getItem(STORAGE_KEYS.USER);
-    const repo = localStorage.getItem(STORAGE_KEYS.REPO);
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+async function loadPostForEdit(filename, sha) {
+    const user = localStorage.getItem(CONFIG_KEYS.USER);
+    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
+    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
 
     try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${name}`, {
+        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${filename}`, {
             headers: { 'Authorization': `token ${token}` }
         });
 
-        if (!response.ok) throw new Error('Failed to fetch file content');
+        if (!response.ok) throw new Error('Failed to fetch post content');
 
         const data = await response.json();
-        const content = decodeURIComponent(escape(atob(data.content)));
+        const content = utf8_atob(data.content);
         
-        // Parse Front Matter
-        const { metadata, body } = parseFrontMatter(content);
+        const { metadata, body } = parseMarkdown(content);
 
-        // Populate Form
-        document.getElementById('edit-filename').value = name;
+        // Fill Form
+        document.getElementById('edit-filename').value = filename;
         document.getElementById('edit-sha').value = sha;
-        document.getElementById('post-title').value = metadata.title || '';
+        document.getElementById('post-title').value = metadata.title || filename.replace('.md', '');
         document.getElementById('post-category').value = metadata.category || '';
         document.getElementById('post-tags').value = (metadata.tags || []).join(', ');
         document.getElementById('post-body').value = body.trim();
 
-        // UI Update
-        document.getElementById('form-title').textContent = '📝 Edit Post';
-        document.getElementById('publish-btn').textContent = 'Update Post';
-        document.getElementById('cancel-edit-btn').style.display = 'block';
+        // Update UI
+        document.getElementById('form-mode').textContent = 'Edit Mode';
+        document.getElementById('form-mode').className = 'mode-indicator mode-edit';
+        document.getElementById('editor-title').textContent = 'Edit Post';
+        document.getElementById('save-btn').textContent = 'Save Changes';
+        document.getElementById('cancel-btn').style.display = 'inline-flex';
         
-        // Scroll to form
-        document.getElementById('post-form-section').scrollIntoView({ behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    } catch (error) {
-        showStatus(error.message, 'error');
+    } catch (err) {
+        showStatus(err.message, 'error');
     }
 }
 
-function cancelEdit() {
+function resetForm() {
     document.getElementById('edit-filename').value = '';
     document.getElementById('edit-sha').value = '';
     document.getElementById('post-title').value = '';
@@ -123,12 +129,14 @@ function cancelEdit() {
     document.getElementById('post-tags').value = '';
     document.getElementById('post-body').value = '';
 
-    document.getElementById('form-title').textContent = '📝 Create New Post';
-    document.getElementById('publish-btn').textContent = 'Publish Post';
-    document.getElementById('cancel-edit-btn').style.display = 'none';
+    document.getElementById('form-mode').textContent = 'Create Mode';
+    document.getElementById('form-mode').className = 'mode-indicator mode-create';
+    document.getElementById('editor-title').textContent = 'Write New Post';
+    document.getElementById('save-btn').textContent = 'Publish Post';
+    document.getElementById('cancel-btn').style.display = 'none';
 }
 
-async function publishPost() {
+async function savePost() {
     const title = document.getElementById('post-title').value.trim();
     const category = document.getElementById('post-category').value.trim();
     const tagsStr = document.getElementById('post-tags').value.trim();
@@ -142,20 +150,15 @@ async function publishPost() {
         return;
     }
 
-    const user = localStorage.getItem(STORAGE_KEYS.USER);
-    const repo = localStorage.getItem(STORAGE_KEYS.REPO);
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+    const user = localStorage.getItem(CONFIG_KEYS.USER);
+    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
+    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
 
-    if (!token) {
-        showStatus('GitHub Token missing. Check configuration.', 'error');
-        return;
-    }
-
-    const fileName = editFilename || (title.toLowerCase().replace(/[^a-z0-9]/g, '-') + '.md');
+    const fileName = editFilename || (slugify(title) + '.md');
     const date = new Date().toISOString().split('T')[0];
     const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
 
-    const content = `---
+    const fullContent = `---
 title: '${title}'
 date: '${date}'
 tags: ${JSON.stringify(tags)}
@@ -164,15 +167,14 @@ category: '${category}'
 
 ${body}`;
 
-    const btn = document.getElementById('publish-btn');
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Processing...';
+    const saveBtn = document.getElementById('save-btn');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
 
     try {
         const payload = {
-            message: editFilename ? `fix: Update post ${title}` : `feat: Create post ${title}`,
-            content: btoa(unescape(encodeURIComponent(content)))
+            message: editFilename ? `Update post: ${title}` : `Create post: ${title}`,
+            content: utf8_btoa(fullContent)
         };
 
         if (editSha) payload.sha = editSha;
@@ -187,28 +189,28 @@ ${body}`;
         });
 
         if (!response.ok) {
-            const errData = await response.json();
-            throw new Error(errData.message || 'Failed to process');
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to save post');
         }
 
         showStatus(editFilename ? 'Post updated successfully!' : 'Post published successfully!', 'success');
-        cancelEdit();
-        fetchPosts();
+        resetForm();
+        fetchPostList();
 
-    } catch (error) {
-        showStatus(error.message, 'error');
+    } catch (err) {
+        showStatus(err.message, 'error');
     } finally {
-        btn.disabled = false;
-        btn.textContent = originalText;
+        saveBtn.disabled = false;
+        saveBtn.textContent = editFilename ? 'Save Changes' : 'Publish Post';
     }
 }
 
 async function deletePost(name, sha) {
-    if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+    if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
 
-    const user = localStorage.getItem(STORAGE_KEYS.USER);
-    const repo = localStorage.getItem(STORAGE_KEYS.REPO);
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+    const user = localStorage.getItem(CONFIG_KEYS.USER);
+    const repo = localStorage.getItem(CONFIG_KEYS.REPO);
+    const token = localStorage.getItem(CONFIG_KEYS.TOKEN);
 
     try {
         const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${name}`, {
@@ -218,48 +220,62 @@ async function deletePost(name, sha) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message: `chore: Delete post ${name}`,
+                message: `Delete post: ${name}`,
                 sha: sha
             })
         });
 
-        if (!response.ok) throw new Error('Failed to delete post');
+        if (!response.ok) throw new Error('Delete failed');
 
-        showStatus('Post deleted successfully!', 'success');
-        fetchPosts();
-
-    } catch (error) {
-        showStatus(error.message, 'error');
+        showStatus('Post deleted successfully.', 'success');
+        fetchPostList();
+    } catch (err) {
+        showStatus(err.message, 'error');
     }
 }
 
-function parseFrontMatter(content) {
+// Helpers
+function utf8_btoa(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+}
+
+function utf8_atob(str) {
+    return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+
+function parseMarkdown(content) {
     const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
     if (!match) return { metadata: {}, body: content };
-
-    const fm = match[1];
-    const body = match[2];
+    
     const metadata = {};
-
-    fm.split('\n').forEach(line => {
-        const [key, ...valueParts] = line.split(':');
-        if (key && valueParts.length) {
-            let value = valueParts.join(':').trim();
-            if (value.startsWith('[') && value.endsWith(']')) {
-                value = value.slice(1, -1).split(',').map(v => v.trim().replace(/^['"]|['"]$/g, ''));
-            } else {
-                value = value.replace(/^['"]|['"]$/g, '');
+    match[1].split('\n').forEach(line => {
+        const parts = line.split(':');
+        if (parts.length >= 2) {
+            const key = parts[0].trim();
+            let val = parts.slice(1).join(':').trim().replace(/^['"]|['"]$/g, '');
+            if (val.startsWith('[') && val.endsWith(']')) {
+                val = val.slice(1, -1).split(',').map(v => v.trim().replace(/^['"]|['"]$/g, ''));
             }
-            metadata[key.trim()] = value;
+            metadata[key] = val;
         }
     });
+    return { metadata, body: match[2] };
+}
 
-    return { metadata, body };
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           
+        .replace(/[^\w\uAC00-\uD7A3-]+/g, '') 
+        .replace(/--+/g, '-')           
+        .replace(/^-+/, '')             
+        .replace(/-+$/, '');            
 }
 
 function showStatus(msg, type) {
-    const display = document.getElementById('status-display');
-    display.textContent = msg;
-    display.className = `status-msg status-${type}`;
-    setTimeout(() => { display.className = 'status-msg'; }, 5000);
+    const el = document.getElementById('status-msg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.style.backgroundColor = type === 'success' ? '#dcfce7' : '#fee2e2';
+    el.style.color = type === 'success' ? '#166534' : '#991b1b';
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Modern Static Blog</title>
+    <title>Admin Dashboard | Digital Garden</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,23 +11,27 @@
     
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .admin-section {
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .admin-layout { grid-template-columns: 1.2fr 0.8fr; }
+        }
+        
+        .admin-card {
             background-color: var(--card-bg);
             border-radius: 1.5rem;
             padding: 2rem;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
+            box-shadow: var(--shadow);
         }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        input, textarea, select {
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+        input, textarea {
             width: 100%;
             padding: 0.75rem 1rem;
             border-radius: 0.75rem;
@@ -38,13 +42,10 @@
             outline: none;
             transition: var(--transition);
         }
-        input:focus, textarea:focus {
-            border-color: var(--accent-color);
-        }
-        textarea {
-            height: 300px;
-            font-family: monospace;
-        }
+        textarea { height: 400px; font-family: 'Inter', sans-serif; resize: vertical; }
+        input:focus, textarea:focus { border-color: var(--accent-color); background-color: var(--bg-color); }
+
+        .btn-group { display: flex; gap: 0.75rem; }
         .btn {
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -52,39 +53,59 @@
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .btn-primary { background-color: var(--accent-color); color: white; }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-        .btn-danger { background-color: #ef4444; color: white; }
-        .btn-danger:hover { opacity: 0.9; }
-        
-        .post-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
+        .btn-secondary { background-color: var(--secondary-bg); color: var(--text-color); }
+        .btn-danger { background-color: #fee2e2; color: #dc2626; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Board Table Style */
+        .post-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .post-table th, .post-table td {
+            text-align: left;
+            padding: 1rem;
             border-bottom: 1px solid var(--border-color);
         }
-        .post-item:last-child { border-bottom: none; }
-        
-        .status-msg {
-            padding: 1rem;
-            border-radius: 0.75rem;
+        .post-table th { font-size: 0.8rem; color: var(--muted-text); text-transform: uppercase; letter-spacing: 0.05em; }
+        .post-table tr:hover { background-color: var(--secondary-bg); }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
             margin-bottom: 1.5rem;
             display: none;
+            animation: fadeIn 0.3s ease;
         }
-        .status-success { background-color: #dcfce7; color: #166534; display: block; }
-        .status-error { background-color: #fee2e2; color: #991b1b; display: block; }
-        
-        #token-config {
-            border-left: 4px solid var(--accent-color);
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .mode-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
+        .mode-create { background-color: #dcfce7; color: #166534; }
+        .mode-edit { background-color: #dbeafe; color: #1e40af; }
+
+        #config-panel { border-top: 4px solid var(--accent-color); }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1 id="blog-title"><a href="index.html">Admin Dashboard</a></h1>
+            <h1 id="blog-title"><a href="index.html">Dashboard</a></h1>
             <button id="theme-toggle" aria-label="Toggle Dark Mode">
                 <span class="sun-icon">☀️</span>
                 <span class="moon-icon">🌙</span>
@@ -93,68 +114,90 @@
     </header>
 
     <main class="container">
-        <div id="status-display" class="status-msg"></div>
+        <div id="status-msg" class="status-badge"></div>
 
-        <!-- Token Setup -->
-        <section class="admin-section" id="token-config">
-            <h2>🔑 GitHub Access Configuration</h2>
-            <p style="color: var(--muted-text); margin-bottom: 1.5rem; font-size: 0.9rem;">
-                Actions require a Personal Access Token (PAT) with <code>repo</code> scope.
-            </p>
-            <div class="form-group">
-                <label>GitHub Username</label>
-                <input type="text" id="gh-username" placeholder="e.g. ryujooh">
-            </div>
-            <div class="form-group">
-                <label>GitHub Repository</label>
-                <input type="text" id="gh-repo" placeholder="e.g. git_test">
-            </div>
-            <div class="form-group">
-                <label>Personal Access Token</label>
-                <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
-            </div>
-            <button class="btn btn-primary" onclick="saveConfig()">Save Configuration</button>
-        </section>
+        <div class="admin-layout">
+            <!-- Left: Editor -->
+            <section>
+                <div class="admin-card">
+                    <div id="form-mode" class="mode-indicator mode-create">Create Mode</div>
+                    <h2 id="editor-title" style="margin-bottom: 1.5rem;">Write New Post</h2>
+                    
+                    <input type="hidden" id="edit-filename">
+                    <input type="hidden" id="edit-sha">
 
-        <!-- Create Post -->
-        <section class="admin-section" id="post-form-section">
-            <h2 id="form-title">📝 Create New Post</h2>
-            <input type="hidden" id="edit-filename">
-            <input type="hidden" id="edit-sha">
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="post-title" placeholder="Enter post title">
-            </div>
-            <div class="form-group">
-                <label>Category</label>
-                <input type="text" id="post-category" placeholder="e.g. Development">
-            </div>
-            <div class="form-group">
-                <label>Tags (Comma separated)</label>
-                <input type="text" id="post-tags" placeholder="e.g. JS, Web, Tutorial">
-            </div>
-            <div class="form-group">
-                <label>Content (Markdown)</label>
-                <textarea id="post-body" placeholder="# Write your markdown here..."></textarea>
-            </div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" id="publish-btn" onclick="publishPost()">Publish Post</button>
-                <button class="btn" id="cancel-edit-btn" style="display: none;" onclick="cancelEdit()">Cancel Edit</button>
-            </div>
-        </section>
+                    <div class="form-group">
+                        <label>Post Title</label>
+                        <input type="text" id="post-title" placeholder="Enter title...">
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" id="post-category" placeholder="General">
+                        </div>
+                        <div class="form-group">
+                            <label>Tags (comma separated)</label>
+                            <input type="text" id="post-tags" placeholder="JS, Web...">
+                        </div>
+                    </div>
 
-        <!-- Manage Posts -->
-        <section class="admin-section">
-            <h2>📦 Manage Posts</h2>
-            <div id="admin-post-list">
-                <p class="loading">Loading posts from GitHub...</p>
-            </div>
-        </section>
+                    <div class="form-group">
+                        <label>Content (Markdown)</label>
+                        <textarea id="post-body" placeholder="Write your story..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="save-btn" onclick="savePost()">Publish Post</button>
+                        <button class="btn btn-secondary" id="cancel-btn" style="display: none;" onclick="resetForm()">Cancel Edit</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: List & Config -->
+            <aside>
+                <!-- Config -->
+                <div class="admin-card" id="config-panel">
+                    <h3 style="margin-bottom: 1rem;">⚙️ Settings</h3>
+                    <div class="form-group">
+                        <label>GitHub Username</label>
+                        <input type="text" id="gh-user" placeholder="ryujooh">
+                    </div>
+                    <div class="form-group">
+                        <label>Repository Name</label>
+                        <input type="text" id="gh-repo" placeholder="ryujooh.github.io">
+                    </div>
+                    <div class="form-group">
+                        <label>Access Token (PAT)</label>
+                        <input type="password" id="gh-token" placeholder="ghp_...">
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="updateConfig()">Save Settings</button>
+                </div>
+
+                <!-- Post List -->
+                <div class="admin-card">
+                    <h3 style="margin-bottom: 1rem;">📜 Existing Posts</h3>
+                    <div id="post-list-container" style="overflow-x: auto;">
+                        <table class="post-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="post-table-body">
+                                <!-- Posts will appear here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <footer>
         <div class="container">
-            <p><a href="index.html" style="color: var(--accent-color);">← Back to Blog</a></p>
+            <p><a href="index.html" style="color: var(--accent-color); font-weight: 600;">← Back to Home</a></p>
         </div>
     </footer>
 
