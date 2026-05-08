@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Modern Static Blog</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-section {
+            background-color: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent-color);
+        }
+        textarea {
+            height: 300px;
+            font-family: monospace;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-primary { background-color: var(--accent-color); color: white; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-danger { background-color: #ef4444; color: white; }
+        .btn-danger:hover { opacity: 0.9; }
+        
+        .post-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .post-item:last-child { border-bottom: none; }
+        
+        .status-msg {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .status-success { background-color: #dcfce7; color: #166534; display: block; }
+        .status-error { background-color: #fee2e2; color: #991b1b; display: block; }
+        
+        #token-config {
+            border-left: 4px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="blog-title"><a href="index.html">Admin Dashboard</a></h1>
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="status-display" class="status-msg"></div>
+
+        <!-- Token Setup -->
+        <section class="admin-section" id="token-config">
+            <h2>🔑 GitHub Access Configuration</h2>
+            <p style="color: var(--muted-text); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                Actions require a Personal Access Token (PAT) with <code>repo</code> scope.
+            </p>
+            <div class="form-group">
+                <label>GitHub Username</label>
+                <input type="text" id="gh-username" placeholder="e.g. ryujooh">
+            </div>
+            <div class="form-group">
+                <label>GitHub Repository</label>
+                <input type="text" id="gh-repo" placeholder="e.g. git_test">
+            </div>
+            <div class="form-group">
+                <label>Personal Access Token</label>
+                <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
+            </div>
+            <button class="btn btn-primary" onclick="saveConfig()">Save Configuration</button>
+        </section>
+
+        <!-- Create Post -->
+        <section class="admin-section">
+            <h2>📝 Create New Post</h2>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="post-title" placeholder="Enter post title">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <input type="text" id="post-category" placeholder="e.g. Development">
+            </div>
+            <div class="form-group">
+                <label>Tags (Comma separated)</label>
+                <input type="text" id="post-tags" placeholder="e.g. JS, Web, Tutorial">
+            </div>
+            <div class="form-group">
+                <label>Content (Markdown)</label>
+                <textarea id="post-body" placeholder="# Write your markdown here..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="publish-btn" onclick="publishPost()">Publish Post</button>
+        </section>
+
+        <!-- Manage Posts -->
+        <section class="admin-section">
+            <h2>📦 Manage Posts</h2>
+            <div id="admin-post-list">
+                <p class="loading">Loading posts from GitHub...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><a href="index.html" style="color: var(--accent-color);">← Back to Blog</a></p>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
