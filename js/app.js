@@ -1,10 +1,8 @@
-// Main App Logic for index.html
+// Ryujooh Blog - Main App Logic
 let allPosts = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const postListContainer = document.getElementById('post-list');
     const searchInput = document.getElementById('search-input');
-    const tagFilters = document.getElementById('tag-filters');
 
     try {
         const response = await fetch('posts.json');
@@ -15,49 +13,55 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderTags(allPosts);
 
         // Search Event
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            filterPosts(query);
-        });
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                filterPosts(query);
+            });
+        }
 
     } catch (error) {
         console.error('Error fetching posts:', error);
-        postListContainer.innerHTML = `
-            <div class="error">
-                <p>No posts found. Have you pushed your first markdown file?</p>
-            </div>
-        `;
+        const container = document.getElementById('post-list');
+        if (container) {
+            container.innerHTML = '<div class="loading">No posts found. Start writing from the admin panel!</div>';
+        }
     }
 });
 
 function renderPosts(posts) {
     const container = document.getElementById('post-list');
+    if (!container) return;
+    
     if (posts.length === 0) {
-        container.innerHTML = '<div class="loading">No posts found matching your criteria.</div>';
+        container.innerHTML = '<div class="loading">No posts match your search.</div>';
         return;
     }
 
     container.innerHTML = posts.map(post => `
-        <a href="post.html?file=${post.file}" class="post-card">
-            <div class="post-meta">
-                <span>${post.date}</span>
-                <span>${post.category || 'General'}</span>
-            </div>
-            <h2>${post.title}</h2>
-            <p>${post.excerpt}</p>
-            <div class="tag-list" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                ${post.tags.map(tag => `<span class="tag" style="font-size: 0.75rem;">${tag}</span>`).join('')}
-            </div>
-        </a>
+        <article>
+            <a href="post.html?file=${post.file}" class="post-card">
+                <div class="post-meta">
+                    <time>${post.date}</time>
+                </div>
+                <h2>${post.title}</h2>
+                <p>${post.excerpt}</p>
+            </a>
+        </article>
     `).join('');
 }
 
 function renderTags(posts) {
     const container = document.getElementById('tag-filters');
+    if (!container) return;
+    
     const tags = new Set();
     posts.forEach(post => post.tags.forEach(tag => tags.add(tag)));
 
-    if (tags.size === 0) return;
+    if (tags.size === 0) {
+        container.style.display = 'none';
+        return;
+    }
 
     container.innerHTML = Array.from(tags).map(tag => `
         <span class="tag" onclick="toggleTagFilter('${tag}', this)">${tag}</span>
@@ -79,7 +83,7 @@ function toggleTagFilter(tag, element) {
         element.classList.add('active');
     }
     
-    filterPosts(searchInput.value.toLowerCase());
+    filterPosts(searchInput ? searchInput.value.toLowerCase() : '');
 }
 
 function filterPosts(query) {

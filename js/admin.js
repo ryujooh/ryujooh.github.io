@@ -7,7 +7,17 @@ const CONFIG_KEYS = {
 
 document.addEventListener('DOMContentLoaded', () => {
     initForm();
-    fetchPostList();
+    
+    // Check for edit parameter
+    const params = new URLSearchParams(window.location.search);
+    const editFile = params.get('edit');
+    
+    if (editFile) {
+        // Need to wait for post list or fetch SHA
+        loadPostForEdit(editFile);
+    } else {
+        fetchPostList();
+    }
 });
 
 function initForm() {

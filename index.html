@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Static Blog</title>
-    <meta name="description" content="A minimalist static blog powered by GitHub Pages and Markdown.">
+    <title>Ryujooh</title>
+    <meta name="description" content="Ryujooh's personal digital garden.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,12 +18,17 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1 id="blog-title"><a href="index.html">My Digital Garden</a></h1>
-            <button id="theme-toggle" aria-label="Toggle Dark Mode">
-                <span class="sun-icon">☀️</span>
-                <span class="moon-icon">🌙</span>
-            </button>
+        <div class="container header-content">
+            <h1 id="blog-title"><a href="index.html">Ryujooh</a></h1>
+            <div class="header-actions">
+                <a href="admin.html" class="icon-btn" aria-label="Write New Post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                </a>
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -45,7 +50,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Modern Static Blog. Powered by GitHub Pages.</p>
+            <p>&copy; 2025 Ryujooh. Powered by GitHub Pages.</p>
             <p style="margin-top: 2rem; opacity: 0.3; font-weight: 200; font-size: 0.7rem;">
                 <a href="admin.html" style="color: var(--text-color); text-decoration: none;">admin</a>
             </p>
