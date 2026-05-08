@@ -1,0 +1,14 @@
+[
+  {
+    "file": "example.md",
+    "title": "Welcome to My Digital Garden",
+    "date": "2025-01-26",
+    "tags": [
+      "General",
+      "Welcome"
+    ],
+    "category": "Intro",
+    "description": "First post in my new static blog.",
+    "excerpt": "Welcome to my new blog. This site is built with . - 🚀 : Pure static files with no heavy framework. - 🎨 : Responsive and minimalist aesthetics. - 🌓 : Supports system preferences and manual toggle. -..."
+  }
+]

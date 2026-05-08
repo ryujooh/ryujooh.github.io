@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Title | Modern Static Blog</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" id="prism-theme">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="blog-title"><a href="index.html">My Digital Garden</a></h1>
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="post-detail">
+            <nav class="breadcrumb">
+                <a href="index.html">← Back to list</a>
+            </nav>
+            <header class="post-header">
+                <h1 id="post-title" class="loading">Loading...</h1>
+                <div class="post-meta">
+                    <span id="post-date"></span>
+                    <div id="post-tags" class="tag-list"></div>
+                </div>
+            </header>
+            <div id="post-content" class="markdown-body">
+                <!-- Markdown content will be rendered here -->
+            </div>
+        </article>
+
+        <section class="comments">
+            <div id="giscus-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Modern Static Blog. Powered by GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/post-loader.js"></script>
+</body>
+</html>
