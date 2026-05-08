@@ -9,10 +9,28 @@
 <body>
     <div class="container">
         <header>
-            <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+            <div class="header-inner">
+                <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+                <div class="admin-controls" id="post-admin-controls" style="display: none;">
+                    <button onclick="editThisPost()" class="icon-btn" title="Edit">✎</button>
+                    <button onclick="deleteThisPost('{{ page.path }}')" class="icon-btn delete" title="Delete">✖</button>
+                </div>
+            </div>
         </header>
 
-        <article>
+        <!-- Edit Form (Hidden) -->
+        <section id="edit-form" style="display: none; margin-bottom: 5rem; border: 1px solid #000; padding: 2rem;">
+            <h3 style="margin-bottom: 1.5rem;">EDIT POST</h3>
+            <input type="text" id="edit-title" value="{{ page.title }}">
+            <input type="text" id="edit-category" value="{{ page.category }}">
+            <textarea id="edit-content"></textarea>
+            <div class="btn-group">
+                <button onclick="updatePost('{{ page.path }}')">UPDATE</button>
+                <button onclick="toggleEditForm()" style="background: #ccc; margin-left: 10px;">CANCEL</button>
+            </div>
+        </section>
+
+        <article id="post-view">
             <header class="post-header">
                 <div class="post-meta">{{ page.date | date: "%Y. %m. %d" }} / {{ page.category }}</div>
                 <h2 class="post-title">{{ page.title }}</h2>
@@ -23,9 +41,34 @@
             </div>
         </article>
 
+        <!-- Comments Section -->
+        <section id="comments" style="margin-top: 10rem; border-top: 1px solid #000; padding-top: 3rem;">
+            <h3>COMMENTS</h3>
+            <div id="comment-list" style="margin: 2rem 0;">
+                <!-- Comments will be loaded here -->
+            </div>
+            
+            <div id="comment-form" style="border: 1px dotted #ccc; padding: 2rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <input type="text" id="cmt-author" placeholder="NAME">
+                    <input type="password" id="cmt-pass" placeholder="PASS (4 DIGITS)" maxlength="4">
+                </div>
+                <textarea id="cmt-content" placeholder="YOUR COMMENT" style="height: 100px;"></textarea>
+                <button onclick="submitComment()">SUBMIT</button>
+            </div>
+        </section>
+
         <footer style="margin-top: 5rem; border-top: 1px dotted #ccc; padding-top: 2rem;">
             <a href="{{ site.baseurl }}/" class="post-link" style="font-size: 0.9rem;">← BACK</a>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ site.baseurl }}/assets/js/admin-core.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/comment-core.js"></script>
+    <script>
+        // Store current post content for editing
+        window.currentPostRaw = `{{ page.content | replace: '`', '\`' }}`;
+    </script>
 </body>
 </html>

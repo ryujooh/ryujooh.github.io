@@ -16,8 +16,8 @@ body {
     background-color: var(--bg);
     color: var(--text);
     line-height: 1.8;
-    font-weight: 200; /* Thin font */
-    padding: 10% 5%;
+    font-weight: 200;
+    padding: 5% 5%;
 }
 
 .container {
@@ -31,6 +31,12 @@ header {
     border-bottom: 1px solid var(--border-solid);
 }
 
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 h1 {
     font-size: 1.5rem;
     font-weight: 400;
@@ -38,22 +44,29 @@ h1 {
     text-transform: lowercase;
 }
 
-h1 a {
-    text-decoration: none;
-    color: var(--text);
+h1 a { text-decoration: none; color: var(--text); }
+
+.admin-controls { display: flex; gap: 10px; }
+.icon-btn {
+    background: none;
+    border: 1px solid var(--border-dotted);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: all 0.2s;
 }
+.icon-btn:hover { border-color: var(--text); }
+.icon-btn.delete { color: #ef4444; border-color: #fee2e2; }
+.icon-btn.delete:hover { border-color: #ef4444; }
 
 /* Post List */
-.post-list {
-    list-style: none;
-}
-
+.post-list { list-style: none; }
 .post-item {
     margin-bottom: 2.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px dotted var(--border-dotted);
 }
-
 .post-meta {
     font-size: 0.75rem;
     color: var(--muted);
@@ -62,7 +75,6 @@ h1 a {
     letter-spacing: 0.1em;
     margin-bottom: 0.5rem;
 }
-
 .post-link {
     font-size: 1.25rem;
     text-decoration: none;
@@ -70,46 +82,15 @@ h1 a {
     font-weight: 200;
     transition: opacity 0.2s;
 }
+.post-link:hover { opacity: 0.5; }
 
-.post-link:hover {
-    opacity: 0.5;
-}
-
-/* Post Content */
-.post-header {
-    margin-bottom: 4rem;
-}
-
-.post-title {
-    font-size: 2.5rem;
-    font-weight: 200;
-    letter-spacing: -0.05em;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-}
-
-.content {
-    font-size: 1.1rem;
-}
-
-.content h2 { margin: 3rem 0 1rem; font-weight: 400; border-bottom: 1px solid var(--border-solid); display: inline-block; }
+/* Content */
+.post-header { margin-bottom: 4rem; }
+.post-title { font-size: 2.5rem; font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; margin-bottom: 1rem; }
+.content { font-size: 1.1rem; }
 .content p { margin-bottom: 2rem; }
-.content img { max-width: 100%; filter: grayscale(100%); margin: 2rem 0; }
-.content pre { 
-    background: #f9f9f9; 
-    padding: 1.5rem; 
-    border-left: 1px solid var(--border-solid); 
-    overflow-x: auto;
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-}
 
-/* Admin UI */
-.admin-card {
-    padding: 2rem;
-    border: 1px solid var(--border-solid);
-}
-
+/* Form Elements */
 input, textarea {
     width: 100%;
     border: none;
@@ -120,10 +101,9 @@ input, textarea {
     font-weight: 100;
     font-size: 1rem;
     outline: none;
+    background: transparent;
 }
-
-textarea { height: 300px; border: 1px solid var(--border-dotted); padding: 1rem; }
-
+textarea { height: 200px; border: 1px solid var(--border-dotted); padding: 1rem; }
 button {
     background: var(--text);
     color: var(--bg);
@@ -135,18 +115,19 @@ button {
     letter-spacing: 0.1em;
     font-size: 0.8rem;
 }
-
 button:hover { background: var(--muted); }
 
-footer {
-    margin-top: 10rem;
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+/* Comments */
+.comment-item {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dotted var(--border-dotted);
 }
+.cmt-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+.cmt-del { cursor: pointer; color: #ef4444; }
+.cmt-text { font-size: 0.95rem; }
 
+footer { margin-top: 10rem; font-size: 0.7rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.2em; }
 @media (max-width: 600px) {
     body { padding: 15% 8%; }
     .post-title { font-size: 2rem; }
