@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
         console.error(e);
         const titleEl = document.getElementById('post-title');
-        if (titleEl) titleEl.textContent = 'Error loading post';
+        if (titleEl) titleEl.textContent = '게시글을 불러오는 데 실패했습니다.';
     }
 });
 
@@ -65,11 +65,11 @@ function loadGiscus() {
     
     // Config as per PLAND.md
     script.setAttribute('data-repo', 'ryujooh/ryujooh.github.io');
-    script.setAttribute('data-repo-id', 'YOUR_REPO_ID'); 
+    script.setAttribute('data-repo-id', 'R_kgDOSXbrjw'); 
     script.setAttribute('data-category', 'General');
-    script.setAttribute('data-category-id', 'YOUR_CATEGORY_ID');
+    script.setAttribute('data-category-id', 'DIC_kwDOSXbrj84C8jtd');
     
-    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-mapping', 'title');
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '1'); // Required by PLAND.md line 346

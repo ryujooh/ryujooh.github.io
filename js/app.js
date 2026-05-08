@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     } catch (e) {
         console.error(e);
-        if (listContainer) listContainer.innerHTML = '<div class="loading">no posts found. please check your setup.</div>';
+        document.getElementById('post-list').innerHTML = '<div class="loading">게시글을 찾을 수 없습니다. 설정을 확인해 주세요.</div>';
     }
 });
 
@@ -31,7 +31,7 @@ function renderPosts(posts) {
     if (!container) return;
 
     if (posts.length === 0) {
-        container.innerHTML = '<div class="loading">no posts match your search.</div>';
+        container.innerHTML = '<div class="loading">검색 결과가 없습니다.</div>';
         return;
     }
 

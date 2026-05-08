@@ -10,20 +10,43 @@
     <div class="container">
         <header>
             <h1><a href="index.html">Ryujooh</a></h1>
-            <button id="theme-toggle" title="Toggle Theme">🌙</button>
+            <button id="theme-toggle" title="테마 변경">🌙</button>
         </header>
 
         <main>
-            <section class="search-wrapper">
-                <input type="text" id="search-input" placeholder="search posts...">
+            <!-- 포트폴리오 섹션 -->
+            <section class="projects-section">
+                <h2 class="section-title">주요 프로젝트</h2>
+                <div class="project-grid">
+                    <a href="post.html?file=portfolio-1.md" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="assets/projects/analysis-1.png" alt="인스타그램 분석 1">
+                        </div>
+                        <div class="project-info">
+                            <h3>인스타그램 인플루언서 분석 I</h3>
+                            <p>팔로워 도달 범위와 참여율을 심층 분석한 데이터 시각화 프로젝트입니다.</p>
+                        </div>
+                    </a>
+                    <a href="post.html?file=portfolio-2.md" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="assets/projects/analysis-2.png" alt="인스타그램 분석 2">
+                        </div>
+                        <div class="project-info">
+                            <h3>인스타그램 인플루언서 분석 II</h3>
+                            <p>성장 트렌드와 네트워크 영향력을 중심으로 생태계를 분석한 후속 연구입니다.</p>
+                        </div>
+                    </a>
+                </div>
             </section>
 
-            <div id="tag-cloud" class="tag-cloud">
-                <!-- Tags populated by js/search.js -->
-            </div>
+            <section class="search-wrapper">
+                <input type="text" id="search-input" placeholder="글 검색...">
+            </section>
+
+            <div id="tag-cloud" class="tag-cloud"></div>
 
             <ul id="post-list" class="post-list">
-                <div class="loading">loading posts...</div>
+                <div class="loading">게시글을 불러오는 중...</div>
             </ul>
         </main>
 
@@ -32,9 +55,9 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/search.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
+ 
