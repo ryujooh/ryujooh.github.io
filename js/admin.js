@@ -63,7 +63,10 @@ async function fetchPosts() {
         listContainer.innerHTML = mdFiles.map(file => `
             <div class="post-item">
                 <span>${file.name}</span>
-                <button class="btn btn-danger" onclick="deletePost('${file.name}', '${file.sha}')">Delete</button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn" onclick="startEdit('${file.name}', '${file.sha}')">Edit</button>
+                    <button class="btn btn-danger" onclick="deletePost('${file.name}', '${file.sha}')">Delete</button>
+                </div>
             </div>
         `).join('');
 
@@ -73,11 +76,66 @@ async function fetchPosts() {
     }
 }
 
+async function startEdit(name, sha) {
+    const user = localStorage.getItem(STORAGE_KEYS.USER);
+    const repo = localStorage.getItem(STORAGE_KEYS.REPO);
+    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+
+    try {
+        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${name}`, {
+            headers: { 'Authorization': `token ${token}` }
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch file content');
+
+        const data = await response.json();
+        const content = decodeURIComponent(escape(atob(data.content)));
+        
+        // Parse Front Matter
+        const { metadata, body } = parseFrontMatter(content);
+
+        // Populate Form
+        document.getElementById('edit-filename').value = name;
+        document.getElementById('edit-sha').value = sha;
+        document.getElementById('post-title').value = metadata.title || '';
+        document.getElementById('post-category').value = metadata.category || '';
+        document.getElementById('post-tags').value = (metadata.tags || []).join(', ');
+        document.getElementById('post-body').value = body.trim();
+
+        // UI Update
+        document.getElementById('form-title').textContent = '📝 Edit Post';
+        document.getElementById('publish-btn').textContent = 'Update Post';
+        document.getElementById('cancel-edit-btn').style.display = 'block';
+        
+        // Scroll to form
+        document.getElementById('post-form-section').scrollIntoView({ behavior: 'smooth' });
+
+    } catch (error) {
+        showStatus(error.message, 'error');
+    }
+}
+
+function cancelEdit() {
+    document.getElementById('edit-filename').value = '';
+    document.getElementById('edit-sha').value = '';
+    document.getElementById('post-title').value = '';
+    document.getElementById('post-category').value = '';
+    document.getElementById('post-tags').value = '';
+    document.getElementById('post-body').value = '';
+
+    document.getElementById('form-title').textContent = '📝 Create New Post';
+    document.getElementById('publish-btn').textContent = 'Publish Post';
+    document.getElementById('cancel-edit-btn').style.display = 'none';
+}
+
 async function publishPost() {
     const title = document.getElementById('post-title').value.trim();
     const category = document.getElementById('post-category').value.trim();
     const tagsStr = document.getElementById('post-tags').value.trim();
     const body = document.getElementById('post-body').value.trim();
+    
+    const editFilename = document.getElementById('edit-filename').value;
+    const editSha = document.getElementById('edit-sha').value;
 
     if (!title || !body) {
         showStatus('Title and Content are required.', 'error');
@@ -93,7 +151,7 @@ async function publishPost() {
         return;
     }
 
-    const fileName = title.toLowerCase().replace(/[^a-z0-9]/g, '-') + '.md';
+    const fileName = editFilename || (title.toLowerCase().replace(/[^a-z0-9]/g, '-') + '.md');
     const date = new Date().toISOString().split('T')[0];
     const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
 
@@ -107,37 +165,41 @@ category: '${category}'
 ${body}`;
 
     const btn = document.getElementById('publish-btn');
+    const originalText = btn.textContent;
     btn.disabled = true;
-    btn.textContent = 'Publishing...';
+    btn.textContent = 'Processing...';
 
     try {
+        const payload = {
+            message: editFilename ? `fix: Update post ${title}` : `feat: Create post ${title}`,
+            content: btoa(unescape(encodeURIComponent(content)))
+        };
+
+        if (editSha) payload.sha = editSha;
+
         const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/pages/${fileName}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `token ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                message: `feat: Create post ${title}`,
-                content: btoa(unescape(encodeURIComponent(content)))
-            })
+            body: JSON.stringify(payload)
         });
 
         if (!response.ok) {
             const errData = await response.json();
-            throw new Error(errData.message || 'Failed to publish');
+            throw new Error(errData.message || 'Failed to process');
         }
 
-        showStatus('Post published successfully! Changes will appear in 1-2 minutes.', 'success');
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-body').value = '';
+        showStatus(editFilename ? 'Post updated successfully!' : 'Post published successfully!', 'success');
+        cancelEdit();
         fetchPosts();
 
     } catch (error) {
         showStatus(error.message, 'error');
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Publish Post';
+        btn.textContent = originalText;
     }
 }
 
@@ -169,6 +231,30 @@ async function deletePost(name, sha) {
     } catch (error) {
         showStatus(error.message, 'error');
     }
+}
+
+function parseFrontMatter(content) {
+    const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!match) return { metadata: {}, body: content };
+
+    const fm = match[1];
+    const body = match[2];
+    const metadata = {};
+
+    fm.split('\n').forEach(line => {
+        const [key, ...valueParts] = line.split(':');
+        if (key && valueParts.length) {
+            let value = valueParts.join(':').trim();
+            if (value.startsWith('[') && value.endsWith(']')) {
+                value = value.slice(1, -1).split(',').map(v => v.trim().replace(/^['"]|['"]$/g, ''));
+            } else {
+                value = value.replace(/^['"]|['"]$/g, '');
+            }
+            metadata[key.trim()] = value;
+        }
+    });
+
+    return { metadata, body };
 }
 
 function showStatus(msg, type) {
