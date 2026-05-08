@@ -7,31 +7,13 @@ layout: default
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-inner">
-                <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
-                <div class="admin-controls">
-                    <button id="admin-unlock-btn" onclick="toggleAdminAuth()" class="icon-btn" title="Admin Unlock">🔒</button>
-                    <button id="new-post-btn" onclick="toggleWriteForm()" class="icon-btn" style="display: none;" title="New Post">✎</button>
-                </div>
-            </div>
+            <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
         </header>
-
-        <!-- New Post Form (Hidden) -->
-        <section id="write-form" style="display: none; margin-bottom: 5rem; border: 1px solid #000; padding: 2rem;">
-            <h3 style="margin-bottom: 1.5rem;">NEW POST</h3>
-            <input type="text" id="post-title" placeholder="TITLE">
-            <input type="text" id="post-category" placeholder="CATEGORY">
-            <textarea id="post-content" placeholder="CONTENT (MARKDOWN)"></textarea>
-            <div class="btn-group">
-                <button onclick="publishPost()">PUBLISH</button>
-                <button onclick="toggleWriteForm()" style="background: #ccc; margin-left: 10px;">CANCEL</button>
-            </div>
-        </section>
 
         <main>
             <ul class="post-list">
@@ -46,12 +28,13 @@ layout: default
             </ul>
         </main>
 
+        <div class="admin-actions">
+            <a href="https://github.com/{{ site.repository }}/new/{{ site.branch }}/_posts" target="_blank">[New Post]</a>
+        </div>
+
         <footer>
-            &copy; {{ site.time | date: "%Y" }} {{ site.title }}.
+            &copy; {{ site.time | date: "%Y" }} {{ site.title }}
         </footer>
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ site.baseurl }}/assets/js/admin-core.js"></script>
 </body>
 </html>

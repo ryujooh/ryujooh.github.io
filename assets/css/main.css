@@ -1,0 +1,151 @@
+/* Ryujooh Minimalist B&W Style */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+
+:root {
+    --bg: #ffffff;
+    --text: #111111;
+    --muted: #999999;
+    --border-dotted: #cccccc;
+    --border-solid: #000000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 200; /* Extra light / Thin */
+    padding: 10% 5%;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 5rem;
+    padding-bottom: 0.5rem;
+}
+
+h1 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+}
+
+h1 a {
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* Post List */
+.post-list {
+    list-style: none;
+}
+
+.post-item {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dotted var(--border-dotted);
+}
+
+.post-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 100;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.post-link {
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 300;
+    transition: color 0.2s;
+}
+
+.post-link:hover {
+    color: var(--muted);
+}
+
+/* Post Detail */
+.post-header {
+    margin-bottom: 4rem;
+}
+
+.post-title {
+    font-size: 2.25rem;
+    font-weight: 200;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.content {
+    font-size: 1.05rem;
+}
+
+.content h2 { 
+    margin: 3.5rem 0 1rem; 
+    font-weight: 400; 
+    font-size: 1.25rem;
+    border-bottom: 1px solid var(--border-solid); 
+    display: inline-block; 
+}
+.content p { margin-bottom: 2rem; }
+.content img { max-width: 100%; filter: grayscale(100%); margin: 2rem 0; }
+.content pre { 
+    background: #fcfcfc; 
+    padding: 1.5rem; 
+    border: 1px solid #f0f0f0; 
+    overflow-x: auto;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+/* Management Links */
+.admin-actions {
+    margin-top: 8rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+}
+
+.admin-actions:hover {
+    opacity: 1;
+}
+
+.admin-actions a {
+    font-size: 0.7rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.admin-actions a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+@media (max-width: 600px) {
+    body { padding: 15% 8%; }
+    .post-title { font-size: 1.75rem; }
+}

@@ -1,14 +1,16 @@
 title: Ryujooh
 description: Minimalist Digital Garden
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://ryujooh.github.io" # the base hostname & protocol for your site
+baseurl: "" 
+url: "https://ryujooh.github.io"
+
+# GitHub Repository Info for management links
+repository: ryujooh/ryujooh.github.io
+branch: main
 
 markdown: kramdown
 permalink: /:title/
 
-# Jekyll build settings
 exclude:
   - README.md
-  - admin.html
   - .github
   - docs
