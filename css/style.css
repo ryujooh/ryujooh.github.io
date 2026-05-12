@@ -190,7 +190,7 @@ h1 a { text-decoration: none; color: var(--text); }
 .post-title { font-size: 2.5rem; font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; margin-bottom: 1rem; }
 .markdown-body { font-size: 1.1rem; }
 .markdown-body p { margin-bottom: 2rem; }
-.markdown-body img { max-width: 100%; filter: grayscale(100%); margin: 2rem 0; }
+.markdown-body img { max-width: 100%; margin: 2rem 0; }
 .markdown-body h2 { margin: 3rem 0 1rem; font-weight: 400; border-bottom: 1px solid var(--border-solid); display: inline-block; }
 
 footer {
