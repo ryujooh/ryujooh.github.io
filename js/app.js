@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listContainer = document.getElementById('post-list');
     
     try {
-        const response = await fetch('posts.json');
+        const response = await fetch('posts.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('posts.json not found');
         allPosts = await response.json();
         
