@@ -1,5 +1,15 @@
 [
   {
+    "slug": "insta-influencer-efficiency",
+    "title": "인스타그램 인플루언서 광고 효율성 분석",
+    "summary": "인스타그램 인플루언서의 실제 참여율과 팔로워 데이터를 결합해 진짜 광고 효율이 높은 '숨은 진주' 발굴",
+    "thumbnail": "images/insta-influencer-efficiency-thumbnail.png",
+    "date": "2026-05-12",
+    "tags": ["pandas", "시각화", "인플루언서"],
+    "category": "데이터분석",
+    "techStack": ["Python", "pandas", "matplotlib", "seaborn"]
+  },
+  {
     "file": "portfolio-2.md",
     "title": "인스타그램 인플루언서 분석 II: 네트워크 영향력 및 성장 트렌드",
     "date": "2025-01-28",
