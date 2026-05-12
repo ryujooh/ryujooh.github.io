@@ -1,13 +1,11 @@
 [
   {
-    "slug": "insta-influencer-efficiency",
-    "title": "인스타그램 인플루언서 광고 효율성 분석",
-    "summary": "인스타그램 인플루언서의 실제 참여율과 팔로워 데이터를 결합해 진짜 광고 효율이 높은 '숨은 진주' 발굴",
-    "thumbnail": "images/insta-influencer-efficiency-thumbnail.png",
+    "file": "insta-influencer-efficiency.md",
+    "title": "insta-influencer-efficiency",
     "date": "2026-05-12",
-    "tags": ["pandas", "시각화", "인플루언서"],
-    "category": "데이터분석",
-    "techStack": ["Python", "pandas", "matplotlib", "seaborn"]
+    "tags": [],
+    "category": "",
+    "excerpt": "> 인스타그램 인플루언서의 실제 참여율과 팔로워 데이터를 결합해 진짜 광고 효율이 높은 '숨은 진주'를 찾다 ![대표 이미지](../images/insta-influencer-efficiency-thumbnail.png) --- `Python` `pandas` `Matplotlib` `Seaborn` - 💡 팔로워 수가 절대적인 참여율을 보장하지 않으며,..."
   },
   {
     "file": "portfolio-2.md",
