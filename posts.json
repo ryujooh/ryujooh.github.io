@@ -1,5 +1,15 @@
 [
   {
+    "slug": "credit-card-churn-analysis",
+    "title": "신용카드 이탈 고객 분석 - 어떤 고객이 떠나는가?",
+    "summary": "1만여 명의 신용카드 고객 데이터를 통해 이탈 고객의 특성과 행동 패턴을 분석하여 비즈니스 개선 인사이트 도출",
+    "thumbnail": "images/credit-card-churn-analysis-thumbnail.png",
+    "date": "2026-05-12",
+    "tags": ["pandas", "고객이탈분석", "시각화"],
+    "category": "데이터분석",
+    "techStack": ["Python", "pandas", "matplotlib", "seaborn"]
+  },
+  {
     "file": "insta-influencer-efficiency.md",
     "title": "insta-influencer-efficiency",
     "date": "2026-05-12",
