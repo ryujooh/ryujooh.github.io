@@ -4,13 +4,15 @@
     "title": "전국 문화축제 표준데이터 EDA 분석",
     "date": "2026-05-19",
     "tags": [
-      "pandas",
-      "공공데이터",
-      "축제",
-      "EDA"
+      "Data Analysis",
+      "Python",
+      "EDA",
+      "Pandas",
+      "API",
+      "Matplotlib"
     ],
-    "category": "데이터분석",
-    "excerpt": "> 전국문화축제표준데이터를 활용해 대한민국 축제의 지역 분포와 계절별 특징, 평균 진행 일수를 분석합니다. ![대표 이미지](../images/festival_chart5_season.png) --- `Python` `pandas` `Matplotlib` - 💡 **가을(9~11월)과 봄(3~5월)**에 축제가 절반 이상 개최되며, 대부분 2~3일의 단기 일정으로 진행..."
+    "category": "",
+    "excerpt": "이번 프로젝트는 공공데이터포털의 **전국문화축제표준데이터 Open API**를 활용하여, 전국에서 열리는 다양한 축제들의 현황을 데이터 분석(EDA) 워크플로우에 따라 파헤쳐 본 결과입니다. --- - **데이터 출처**: 공공데이터포털 (전국문화축제표준데이터 API) - **수집 방법**: `requests` 라이브러리를 활용한 JSON 응답 수집 (페이..."
   },
   {
     "file": "careerend-female-training-analysis.md",
