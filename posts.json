@@ -25,7 +25,7 @@
       "EDA"
     ],
     "category": "데이터분석",
-    "excerpt": "> 2018년부터 2025년까지의 경기도 경력단절여성 직업교육훈련 데이터를 바탕으로 지역별, 유형별, 연도별 트렌드를 분석하여 앞으로의 방향성을 도출합니다. ![대표 이미지](../images/chart1_region_top10.png) --- `Python` `pandas` `Matplotlib` `seaborn` - 💡 **시흥시, 수원시** 등 산업..."
+    "excerpt": "> 2018년부터 2025년까지의 경기도 경력단절여성 직업교육훈련 데이터를 바탕으로 지역별, 유형별, 연도별 트렌드를 분석하여 앞으로의 방향성을 도출합니다. ![대표 이미지](../images/chart1_region_top10.png) --- `Python` `pandas` `Matplotlib` `seaborn` -  **시흥시, 수원시** 등 산업 수..."
   },
   {
     "file": "insta-influencer-efficiency.md",
