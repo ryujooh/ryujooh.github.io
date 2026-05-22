@@ -153,7 +153,7 @@ table.opportunities{width:100%;border-collapse:collapse;margin:24px 0 40px;font-
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
   createChat({
-    webhookUrl: 'https://ryujooh.app.n8n.cloud/webhook-test/chat',
+    webhookUrl: 'https://ryujooh.app.n8n.cloud/webhook/chat',
     showWelcomeScreen: true,
     initialMessages: [
       '안녕하세요! 데이터 분석가 홍길동의 AI 어시스턴트입니다 😊',
@@ -168,14 +168,38 @@ table.opportunities{width:100%;border-collapse:collapse;margin:24px 0 40px;font-
   });
 </script>
 <style>
+  /* n8n 챗봇 미니멀 B&W 점선 디자인 + 블루 포인트 */
   :root {
-    --chat--color-primary: #3b82f6;
-    --chat--color-secondary: #2563eb;
-    --chat--font-family: 'Pretendard Variable', sans-serif;
-    --chat--window--border-radius: 12px;
+    --chat--color-primary: #3b82f6;      /* 강조(포인트) 블루 */
+    --chat--color-secondary: #000000;    /* 흑백 테마 */
+    --chat--color-background: #ffffff;   /* 배경 화이트 */
+    --chat--color-font: #111111;         /* 텍스트 블랙 */
+    --chat--window--border-radius: 0px;  /* 각진 모서리 (심플) */
   }
-  .chat-layout {
+  
+  /* 모든 챗봇 내부 텍스트 얇게 */
+  div[class*="chat"] {
     font-weight: 300 !important;
+  }
+  
+  /* 채팅창 및 버튼 외곽 가는 점선 (블로그 테마 통일) */
+  div[class*="chat-window"], 
+  button[class*="chat"] {
+    border: 1px dotted #333333 !important;
+    box-shadow: none !important;
+  }
+  
+  /* 채팅 말풍선 테두리 가는 점선 */
+  div[class*="chat-message"] {
+    border: 1px dotted #999999 !important;
+    background-color: transparent !important;
+    color: #111111 !important;
+    border-radius: 0px !important;
+  }
+  
+  /* 사용자(내)가 보낸 메시지만 블루 점선으로 강조 */
+  div[class*="chat-message"][class*="user"] {
+    border: 1px dotted #3b82f6 !important;
   }
 </style>
 
