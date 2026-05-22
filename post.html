@@ -65,13 +65,19 @@
       });
     </script>
     <style>
-      /* n8n 챗봇 모던 & 심플 디자인 (블루 포인트) */
+      /* n8n 챗봇 모던 & 심플 디자인 (블루 포인트) - 강제 적용 */
       :root {
-        --chat--color-primary: #3b82f6;      /* 메인 포인트 (블루) */
-        --chat--color-background: #ffffff;   /* 창 배경 (화이트) */
-        --chat--color-font: #333333;         /* 기본 텍스트 색상 */
-        --chat--window--border-radius: 24px; /* 챗봇창 전체 부드러운 라운드 */
-        --chat--message--border-radius: 20px;/* 말풍선 라운드 */
+        --chat--color-primary: #3b82f6 !important;
+        --chat--color-primary-shade-50: #2563eb !important;
+        --chat--color-primary-shade-100: #1d4ed8 !important;
+        --chat--color-secondary: #ffffff !important;
+        --chat--color-secondary-shade-50: #f4f4f5 !important;
+        --chat--color-background: #ffffff !important;
+        --chat--color-font: #333333 !important;
+        --chat--color-light: #ffffff !important;
+        --chat--color-dark: #111111 !important;
+        --chat--window--border-radius: 24px !important;
+        --chat--message--border-radius: 20px !important;
       }
       
       /* 헤더 상단의 블랙 배경 제거 및 심플 화이트 처리 */
@@ -92,13 +98,13 @@
       }
       
       /* 챗봇 여는 우측 하단 아이콘 블루 & 작게 */
-      button[class*="trigger"], button[class*="toggle"] {
+      button[class*="trigger"], button[class*="toggle"], button[class*="chat-button"] {
         width: 52px !important;
         height: 52px !important;
         background-color: #3b82f6 !important;
         box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
       }
-      button[class*="trigger"] svg, button[class*="toggle"] svg {
+      button[class*="trigger"] svg, button[class*="toggle"] svg, button[class*="chat-button"] svg {
         width: 24px !important;
         height: 24px !important;
         fill: #ffffff !important;
