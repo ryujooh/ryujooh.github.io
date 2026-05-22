@@ -147,46 +147,37 @@ table.opportunities{width:100%;border-collapse:collapse;margin:24px 0 40px;font-
   </div>
 </div>
 
-<!-- ===== 포트폴리오 AI 챗봇 ===== -->
-<script>
-  window.ChatWidgetConfig = {
-    webhook: {
-      url: 'https://ryujooh.app.n8n.cloud/webhook-test/chat'
-    },
-    branding: {
-      name: 'Portfolio R',
-      welcomeText: '안녕하세요! 저에 대해 궁금한 점을 물어보세요 😊',
-      responseTimeText: '잠시 후 답변드릴게요'
-    },
-    style: {
-      primaryColor: '#3b82f6',
-      secondaryColor: '#2563eb',
-      position: 'right'
+<!-- ===== n8n 공식 AI 챗봇 ===== -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    webhookUrl: 'https://ryujooh.app.n8n.cloud/webhook-test/chat',
+    showWelcomeScreen: true,
+    initialMessages: [
+      '안녕하세요! 데이터 분석가 홍길동의 AI 어시스턴트입니다 😊',
+      '프로젝트, 기술 스택, 경력 등에 대해 자유롭게 물어보세요!'
+    ],
+    i18n: {
+      en: {
+        getStarted: '대화 시작하기',
+        inputPlaceholder: '질문을 입력해주세요...',
+      }
     }
-  };
+  });
 </script>
 <style>
-  .n8n-chat-widget {
-    font-weight: 300 !important;
+  :root {
+    --chat--color-primary: #3b82f6;
+    --chat--color-secondary: #2563eb;
+    --chat--font-family: 'Pretendard Variable', sans-serif;
+    --chat--window--border-radius: 12px;
   }
-  .n8n-chat-widget .welcome-text,
-  .n8n-chat-widget .brand-header span,
-  .n8n-chat-widget .new-chat-btn {
-    font-weight: 400 !important;
-  }
-  .n8n-chat-widget .chat-message {
-    font-weight: 300 !important;
-    border: 0.5px solid rgba(59, 130, 246, 0.2) !important;
-  }
-  .n8n-chat-widget .chat-container {
-    border: 0.5px solid rgba(59, 130, 246, 0.2) !important;
-  }
-  .n8n-chat-widget .chat-input textarea, 
-  .n8n-chat-widget .chat-input button {
+  .chat-layout {
     font-weight: 300 !important;
   }
 </style>
-<script src="https://cdn.jsdelivr.net/gh/juansebsol/n8n-chatbot-template@latest/chat-widget.js"></script>
 
 </body>
 </html>
