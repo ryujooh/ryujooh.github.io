@@ -35,13 +35,18 @@ function renderPosts(posts) {
         return;
     }
 
-    container.innerHTML = posts.map(post => `
+    container.innerHTML = posts.map(post => {
+        const link = (post.file.startsWith('docs/') || post.file.endsWith('.html')) 
+            ? post.file 
+            : `post.html?file=${post.file}`;
+        return `
         <li class="post-item">
             <div class="post-meta">${post.date} / ${post.category || 'general'}</div>
-            <a href="post.html?file=${post.file}" class="post-link">${post.title}</a>
+            <a href="${link}" class="post-link">${post.title}</a>
             <div class="post-excerpt">${post.excerpt}</div>
         </li>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function handleTagClick(tag, element, posts, renderFn) {

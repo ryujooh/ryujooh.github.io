@@ -1,5 +1,15 @@
 [
   {
+    "file": "docs/2026-05-21-비바리퍼블리카-2026-05-21T03-55-12.html",
+    "title": "비바리퍼블리카",
+    "date": "2026-05-21",
+    "tags": [
+      "Research Note"
+    ],
+    "category": "Research",
+    "excerpt": "단순 송금 앱에서 시작해 금융을 넘어 사용자의 하루 일과 전체를 점유하는 독점적 슈퍼앱 플랫폼으로 진화하고 있다."
+  },
+  {
     "file": "cultural-festival-analysis.md",
     "title": "전국 문화축제 표준데이터 EDA 분석",
     "date": "2026-05-19",

@@ -52,6 +52,41 @@ const posts = files.map((filename) => {
   };
 });
 
+// Add HTML files from docs folder
+const docsDir = 'docs';
+if (fs.existsSync(docsDir)) {
+  const docFiles = fs.readdirSync(docsDir).filter((file) => file.endsWith('.html'));
+  docFiles.forEach((filename) => {
+    const filePath = path.join(docsDir, filename);
+    const content = fs.readFileSync(filePath, 'utf8');
+
+    // Extract date from filename if possible
+    const dateMatch = filename.match(/^(\d{4}-\d{2}-\d{2})/);
+    const date = dateMatch ? dateMatch[1] : new Date().toISOString().split('T')[0];
+
+    // Extract title from <title> tag or <h1> tag
+    const titleMatch = content.match(/<title>(.*?)<\/title>/) || content.match(/<h1[^>]*>(.*?)<\/h1>/);
+    let title = titleMatch ? titleMatch[1].replace(' — Research Note', '') : filename.replace('.html', '');
+
+    // Extract excerpt from the first <p> or .standfirst element
+    let excerpt = '';
+    const standfirstMatch = content.match(/class="standfirst"[^>]*>([\s\S]*?)<\/p>/) || content.match(/<p>([\s\S]*?)<\/p>/);
+    if (standfirstMatch) {
+      excerpt = standfirstMatch[1].replace(/<[^>]+>/g, '').trim().substring(0, 200);
+      if (excerpt.length === 200) excerpt += '...';
+    }
+
+    posts.push({
+      file: `docs/${filename}`,
+      title: title.trim(),
+      date: date,
+      tags: ['Research Note'],
+      category: 'Research',
+      excerpt: excerpt
+    });
+  });
+}
+
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 fs.writeFileSync(outputFile, JSON.stringify(posts, null, 2));
 console.log(`Generated posts.json with ${posts.length} posts`);
