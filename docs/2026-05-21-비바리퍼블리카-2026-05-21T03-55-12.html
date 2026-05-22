@@ -159,11 +159,33 @@ table.opportunities{width:100%;border-collapse:collapse;margin:24px 0 40px;font-
       responseTimeText: '잠시 후 답변드릴게요'
     },
     style: {
-      primaryColor: '#5c6bc0',
+      primaryColor: '#3b82f6',
+      secondaryColor: '#2563eb',
       position: 'right'
     }
   };
 </script>
+<style>
+  .n8n-chat-widget {
+    font-weight: 300 !important;
+  }
+  .n8n-chat-widget .welcome-text,
+  .n8n-chat-widget .brand-header span,
+  .n8n-chat-widget .new-chat-btn {
+    font-weight: 400 !important;
+  }
+  .n8n-chat-widget .chat-message {
+    font-weight: 300 !important;
+    border: 0.5px solid rgba(59, 130, 246, 0.2) !important;
+  }
+  .n8n-chat-widget .chat-container {
+    border: 0.5px solid rgba(59, 130, 246, 0.2) !important;
+  }
+  .n8n-chat-widget .chat-input textarea, 
+  .n8n-chat-widget .chat-input button {
+    font-weight: 300 !important;
+  }
+</style>
 <script src="https://cdn.jsdelivr.net/gh/juansebsol/n8n-chatbot-template@latest/chat-widget.js"></script>
 
 </body>
