@@ -48,6 +48,7 @@
     padding: 0; 
     box-sizing: border-box; 
     scroll-behavior: smooth;
+    scroll-padding-top: 85px;
 }
 
 body {
@@ -622,7 +623,7 @@ footer {
 
 /* Post Detail & Markdown Body Styling */
 article {
-    margin-top: 3rem;
+    padding-top: 3rem;
     margin-bottom: 5rem;
 }
 
