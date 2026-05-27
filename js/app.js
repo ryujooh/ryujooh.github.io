@@ -5,6 +5,7 @@ window.activeTag = null;
 document.addEventListener('DOMContentLoaded', async () => {
     const listContainer = document.getElementById('post-list');
     
+    // 1. Fetch and render posts
     try {
         const response = await fetch('posts.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('posts.json not found');
@@ -24,6 +25,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(e);
         document.getElementById('post-list').innerHTML = '<div class="loading">게시글을 찾을 수 없습니다. 설정을 확인해 주세요.</div>';
     }
+
+    // 2. Smooth scrolling for navigation links
+    document.querySelectorAll('header a[href^="#"], .hero-buttons a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // 3. Scroll Fade-in Animation (IntersectionObserver)
+    const sections = document.querySelectorAll('.fade-in-section');
+    const observerOptions = {
+        root: null,
+        threshold: 0.05,
+        rootMargin: '0px 0px -40px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 });
 
 function renderPosts(posts) {
