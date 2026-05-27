@@ -620,6 +620,116 @@ footer {
     font-style: italic; 
 }
 
+/* Post Detail & Markdown Body Styling */
+article {
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+}
+
+.post-header { 
+    max-width: 750px;
+    margin: 0 auto 3rem; 
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 2rem;
+}
+
+.post-title { 
+    font-size: 2.25rem; 
+    font-weight: 800; 
+    letter-spacing: -0.03em; 
+    line-height: 1.25; 
+    margin-bottom: 1rem; 
+}
+
+.markdown-body { 
+    max-width: 750px;
+    margin: 0 auto;
+    font-size: 1.05rem; 
+    line-height: 1.8;
+}
+
+.markdown-body p { 
+    margin-bottom: 1.8rem; 
+}
+
+.markdown-body img { 
+    display: block;
+    max-width: 100%; 
+    height: auto;
+    margin: 2.5rem auto; 
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+    color: var(--text);
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.markdown-body h1 { font-size: 1.75rem; }
+.markdown-body h2 { font-size: 1.5rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; }
+.markdown-body h3 { font-size: 1.25rem; }
+
+.markdown-body hr {
+    margin: 3rem 0;
+    border: 0;
+    border-top: 1px dashed var(--border-dotted);
+}
+
+.markdown-body blockquote {
+    background: var(--badge-bg);
+    border-left: 4px solid var(--primary);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.markdown-body blockquote p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.markdown-body ul, .markdown-body ol {
+    margin-bottom: 1.8rem;
+    padding-left: 1.5rem;
+}
+
+.markdown-body li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-body code {
+    background: var(--badge-bg);
+    color: var(--primary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    font-family: Consolas, Monaco, monospace;
+}
+
+.markdown-body pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+.markdown-body pre {
+    background: var(--badge-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.8rem;
+    border: 1px solid var(--card-border);
+}
+
 /* Scroll Animation classes */
 .fade-in-section {
     opacity: 0;
