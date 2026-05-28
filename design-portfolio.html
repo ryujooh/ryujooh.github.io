@@ -19,7 +19,7 @@
                 <li><a href="index.html#philosophy">Philosophy</a></li>
                 <li><a href="index.html#projects">Projects</a></li>
                 <li><a href="index.html#blog">Blog</a></li>
-                <li><a href="design-portfolio.html" class="nav-active">Design</a></li>
+                <li><a href="design-portfolio.html" class="dp-nav-active">Design</a></li>
                 <li><button id="theme-toggle" title="테마 변경">🌙</button></li>
             </ul>
         </div>
@@ -27,239 +27,381 @@
 
     <div class="container">
         <main>
-            <!-- Hero 영역 -->
+
+            <!-- ── Hero ── -->
             <section class="dp-hero fade-in-section">
-                <span class="hero-badge">Design Portfolio</span>
+                <span class="hero-badge">Design Portfolio · 2025</span>
                 <h1 class="hero-title">
-                    데이터와 <span>디자인</span>의 교차점<br>
-                    UX / UI 포트폴리오
+                    비즈니스를 이해하는<br><span>디자이너의 포트폴리오</span>
                 </h1>
                 <p class="hero-desc">
-                    14년 금융권 개발자 경험에서 비롯된 <strong>사용자 중심 사고</strong>와 데이터 분석 관점을 결합한<br>
-                    디자인 작업물입니다. 비즈니스 맥락을 이해하는 분석가의 시선으로 설계했습니다.
+                    14년 금융권 개발자 경험에서 출발한 <strong>사용자 중심 설계</strong> 작업물입니다.<br>
+                    데이터 분석가의 시선으로 문제를 정의하고, 직관적인 화면으로 해결합니다.
                 </p>
-                <div class="dp-meta-row">
-                    <span class="dp-meta-item">🗓 2025 포트폴리오</span>
-                    <span class="dp-meta-item">✏️ Figma</span>
-                    <span class="dp-meta-item">🎯 UX / UI Design</span>
-                    <a href="https://www.figma.com/slides/8wTzcaC7lE0uwDlLL4ee6s" target="_blank" rel="noopener" class="dp-ext-link">
-                        Figma에서 원본 보기 ↗
+                <div class="dp-hero-meta">
+                    <span>🗓 2025</span>
+                    <span>✏️ Figma</span>
+                    <span>🎯 UX · UI Design</span>
+                    <a href="https://www.figma.com/slides/8wTzcaC7lE0uwDlLL4ee6s" target="_blank" rel="noopener">
+                        원본 슬라이드 보기 ↗
                     </a>
                 </div>
             </section>
 
-            <!-- Figma 임베드 -->
-            <section class="dp-embed-section fade-in-section">
-                <div class="dp-embed-wrapper">
-                    <iframe
-                        id="figma-embed"
-                        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fslides%2F8wTzcaC7lE0uwDlLL4ee6s"
-                        allowfullscreen
-                        loading="lazy"
-                        title="포트폴리오_2025 — Figma Slides"
-                    ></iframe>
-                    <!-- 로딩 오버레이 -->
-                    <div class="dp-embed-loading" id="embed-loading">
-                        <div class="dp-loading-spinner"></div>
-                        <p>슬라이드를 불러오는 중...</p>
+            <!-- ── 슬라이드 갤러리 안내 ── -->
+            <section class="dp-guide-section fade-in-section">
+                <div class="dp-guide-box">
+                    <div class="dp-guide-icon">📁</div>
+                    <div class="dp-guide-text">
+                        <h3>슬라이드 이미지 업로드 방법</h3>
+                        <ol>
+                            <li>Figma에서 슬라이드를 열고 <strong>Export → PNG</strong> (각 슬라이드별)</li>
+                            <li>파일명을 <code>slide-01.png</code>, <code>slide-02.png</code> … 순서대로 저장</li>
+                            <li><code>images/design/</code> 폴더에 넣고 GitHub에 push하면 자동으로 표시됩니다</li>
+                        </ol>
                     </div>
                 </div>
-                <!-- 전체화면 버튼 -->
-                <div class="dp-embed-actions">
-                    <button id="fullscreen-btn" class="btn btn-secondary dp-fullscreen-btn" onclick="toggleFullscreen()">
-                        ⛶ 전체 화면으로 보기
-                    </button>
-                    <a href="https://www.figma.com/slides/8wTzcaC7lE0uwDlLL4ee6s" target="_blank" rel="noopener" class="btn btn-primary">
-                        Figma에서 열기 ↗
-                    </a>
-                </div>
             </section>
 
-            <!-- 디자인 작업 설명 카드 -->
-            <section class="dp-desc-section fade-in-section">
+            <!-- ── 슬라이드 갤러리 ── -->
+            <section class="dp-gallery-section fade-in-section">
                 <div class="section-header">
-                    <span class="section-tag">About This Work</span>
-                    <h2 class="section-title">작업 <strong>배경 및 특징</strong></h2>
+                    <span class="section-tag">Slides</span>
+                    <h2 class="section-title">포트폴리오 <strong>슬라이드</strong></h2>
                 </div>
-                <div class="dp-desc-grid">
-                    <div class="dp-desc-card">
-                        <div class="dp-desc-icon">📊</div>
-                        <h3>데이터 기반 설계</h3>
-                        <p>단순 미적 감각이 아닌, 사용자 데이터와 행동 패턴 분석을 바탕으로 화면 흐름과 구조를 결정했습니다.</p>
+
+                <div class="dp-gallery" id="dp-gallery">
+                    <!-- JS로 동적 로드 OR 슬라이드 이미지가 없을 때 플레이스홀더 표시 -->
+                </div>
+
+                <!-- 전체 보기 버튼 -->
+                <div class="dp-gallery-actions">
+                    <a href="https://www.figma.com/slides/8wTzcaC7lE0uwDlLL4ee6s" target="_blank" rel="noopener" class="btn btn-primary">
+                        Figma에서 전체 슬라이드 보기 ↗
+                    </a>
+                </div>
+            </section>
+
+            <!-- ── 라이트박스 오버레이 ── -->
+            <div class="dp-lightbox" id="dp-lightbox" onclick="closeLightbox()">
+                <button class="dp-lb-close" onclick="closeLightbox()">✕</button>
+                <button class="dp-lb-prev" id="lb-prev" onclick="event.stopPropagation(); shiftLightbox(-1)">&#8249;</button>
+                <div class="dp-lb-content" onclick="event.stopPropagation()">
+                    <img id="dp-lb-img" src="" alt="">
+                    <p id="dp-lb-caption"></p>
+                </div>
+                <button class="dp-lb-next" id="lb-next" onclick="event.stopPropagation(); shiftLightbox(1)">&#8250;</button>
+            </div>
+
+            <!-- ── 작업 특징 ── -->
+            <section class="dp-features-section fade-in-section">
+                <div class="section-header">
+                    <span class="section-tag">Approach</span>
+                    <h2 class="section-title">디자인 <strong>접근 방식</strong></h2>
+                </div>
+                <div class="dp-features-grid">
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">01</div>
+                        <h3>문제 정의 우선</h3>
+                        <p>화면을 그리기 전에 <strong>비즈니스 목표와 사용자 Pain Point</strong>를 먼저 정의합니다. 14년 현업 경험으로 현실적인 요구사항 파악이 가능합니다.</p>
                     </div>
-                    <div class="dp-desc-card">
-                        <div class="dp-desc-icon">🏦</div>
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">02</div>
+                        <h3>데이터 기반 의사결정</h3>
+                        <p>직관이 아닌 <strong>사용자 행동 데이터와 분석 인사이트</strong>를 바탕으로 레이아웃, 컬러, 플로우를 결정합니다.</p>
+                    </div>
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">03</div>
+                        <h3>개발자 관점 핸드오프</h3>
+                        <p>개발자 출신으로 <strong>구현 가능성을 고려한 스펙</strong>과 정확한 Figma 핸드오프 산출물을 제공합니다.</p>
+                    </div>
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">04</div>
                         <h3>금융 도메인 전문성</h3>
-                        <p>14년 금융권 실무 경험으로 복잡한 금융 정보를 직관적으로 전달하는 UI 패턴에 강점을 갖고 있습니다.</p>
+                        <p>복잡한 금융 정보를 <strong>비전문가도 이해할 수 있는 직관적 UI</strong>로 전달하는 패턴에 강점이 있습니다.</p>
                     </div>
-                    <div class="dp-desc-card">
-                        <div class="dp-desc-icon">🎯</div>
-                        <h3>비즈니스 임팩트 중심</h3>
-                        <p>보기 좋은 화면보다 전환율과 사용성 목표를 달성하는 결과 중심의 디자인 의사결정을 지향합니다.</p>
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">05</div>
+                        <h3>비즈니스 임팩트 측정</h3>
+                        <p>디자인 결과를 <strong>전환율, 이탈률, 태스크 완료율</strong> 등 수치로 검증하고 개선하는 사이클을 실천합니다.</p>
                     </div>
-                    <div class="dp-desc-card">
-                        <div class="dp-desc-icon">🔄</div>
-                        <h3>개발자 친화적 핸드오프</h3>
-                        <p>개발자 출신으로서 구현 가능성을 고려한 스펙 작성과 정확한 Figma 핸드오프 산출물을 제공합니다.</p>
+                    <div class="dp-feature-card">
+                        <div class="dp-feature-num">06</div>
+                        <h3>커뮤니케이션 능력</h3>
+                        <p>기획자, 개발자, 경영진 등 다양한 이해관계자에게 <strong>맥락에 맞는 언어</strong>로 디자인 의도를 설명합니다.</p>
                     </div>
                 </div>
             </section>
+
         </main>
 
         <footer>
-            <a href="index.html" style="font-size: 0.8rem; font-weight: 200;">← 메인으로 돌아가기</a>
+            <a href="index.html" style="font-size:0.8rem; font-weight:200;">← 메인으로 돌아가기</a>
             <br><br>
             &copy; 2026 Ryujooh. All Rights Reserved.
         </footer>
     </div>
 
-    <!-- 스크립트 -->
     <script src="js/theme.js"></script>
     <script src="js/app.js"></script>
     <script>
-        // iframe 로딩 완료 시 스피너 숨김
-        const iframe = document.getElementById('figma-embed');
-        const loading = document.getElementById('embed-loading');
-        iframe.addEventListener('load', () => {
-            loading.style.opacity = '0';
-            setTimeout(() => { loading.style.display = 'none'; }, 400);
-        });
+    // ── 슬라이드 이미지 자동 감지 & 갤러리 렌더 ──
+    (function() {
+        const gallery = document.getElementById('dp-gallery');
+        // images/design/ 폴더의 slide-01.png ~ slide-30.png 자동 탐지
+        const MAX = 30;
+        const slides = [];
 
-        // 전체화면 토글
-        function toggleFullscreen() {
-            const wrapper = document.querySelector('.dp-embed-wrapper');
-            if (!document.fullscreenElement) {
-                wrapper.requestFullscreen().catch(() => {});
-                document.getElementById('fullscreen-btn').textContent = '✕ 전체 화면 닫기';
-            } else {
-                document.exitFullscreen();
-                document.getElementById('fullscreen-btn').textContent = '⛶ 전체 화면으로 보기';
+        function renderGallery(imgs) {
+            if (imgs.length === 0) {
+                gallery.innerHTML = `
+                    <div class="dp-empty-state">
+                        <div class="dp-empty-icon">🖼</div>
+                        <p>슬라이드 이미지를 <code>images/design/</code> 폴더에 추가하면<br>여기에 자동으로 표시됩니다.</p>
+                        <a href="https://www.figma.com/slides/8wTzcaC7lE0uwDlLL4ee6s" target="_blank" class="btn btn-primary" style="margin-top:1rem;">
+                            Figma에서 원본 보기 ↗
+                        </a>
+                    </div>`;
+                return;
+            }
+            gallery.innerHTML = imgs.map((src, i) => `
+                <div class="dp-slide-item" onclick="openLightbox(${i})" tabindex="0" role="button" aria-label="슬라이드 ${i+1} 크게 보기">
+                    <img src="${src}" alt="디자인 포트폴리오 슬라이드 ${i+1}" loading="lazy">
+                    <div class="dp-slide-overlay">
+                        <span>🔍 크게 보기</span>
+                    </div>
+                    <div class="dp-slide-num">${String(i+1).padStart(2,'0')}</div>
+                </div>`).join('');
+        }
+
+        // 이미지 순차 탐지
+        let checked = 0, found = [];
+        for (let i = 1; i <= MAX; i++) {
+            const src = `images/design/slide-${String(i).padStart(2,'0')}.png`;
+            const img = new Image();
+            img.onload = () => { found.push({idx:i, src}); check(); };
+            img.onerror = () => check();
+            img.src = src;
+            function check() {
+                checked++;
+                if (checked === MAX) {
+                    found.sort((a,b)=>a.idx-b.idx);
+                    const srcs = found.map(f=>f.src);
+                    window._dpSlides = srcs;
+                    renderGallery(srcs);
+                }
             }
         }
+    })();
+
+    // ── 라이트박스 ──
+    let _lbIdx = 0;
+    function openLightbox(idx) {
+        const slides = window._dpSlides || [];
+        if (!slides.length) return;
+        _lbIdx = idx;
+        document.getElementById('dp-lb-img').src = slides[idx];
+        document.getElementById('dp-lb-caption').textContent = `슬라이드 ${idx + 1} / ${slides.length}`;
+        document.getElementById('dp-lightbox').classList.add('dp-lb-open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+        document.getElementById('dp-lightbox').classList.remove('dp-lb-open');
+        document.body.style.overflow = '';
+    }
+    function shiftLightbox(dir) {
+        const slides = window._dpSlides || [];
+        _lbIdx = (_lbIdx + dir + slides.length) % slides.length;
+        document.getElementById('dp-lb-img').src = slides[_lbIdx];
+        document.getElementById('dp-lb-caption').textContent = `슬라이드 ${_lbIdx + 1} / ${slides.length}`;
+    }
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('dp-lightbox').classList.contains('dp-lb-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft')  shiftLightbox(-1);
+        if (e.key === 'ArrowRight') shiftLightbox(1);
+    });
     </script>
 
-    <!-- 페이지 전용 스타일 -->
+    <!-- ── 페이지 전용 스타일 ── -->
     <style>
-        /* ── Design Portfolio Page Styles ── */
+        /* Nav active */
+        .dp-nav-active { color: var(--primary) !important; font-weight: 500 !important; }
 
+        /* Hero */
         .dp-hero {
-            padding: 5rem 0 3rem;
+            padding: 5rem 0 3.5rem;
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
             border-bottom: 1px dashed var(--border-dotted);
         }
-
-        .dp-meta-row {
+        .dp-hero-meta {
             display: flex;
             align-items: center;
             gap: 1.5rem;
             flex-wrap: wrap;
             margin-top: 0.5rem;
-        }
-
-        .dp-meta-item {
             font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 300;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
-
-        .dp-ext-link {
-            font-size: 0.8rem;
+        .dp-hero-meta a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 400;
-            letter-spacing: 0.03em;
             border-bottom: 1px dashed var(--primary);
             padding-bottom: 1px;
             transition: opacity 0.2s;
         }
+        .dp-hero-meta a:hover { opacity: 0.7; }
 
-        .dp-ext-link:hover {
-            opacity: 0.7;
-        }
-
-        /* ── Figma Embed ── */
-        .dp-embed-section {
-            padding: 4rem 0;
+        /* Guide */
+        .dp-guide-section {
+            padding: 3rem 0;
             border-bottom: 1px dashed var(--border-dotted);
         }
-
-        .dp-embed-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
+        .dp-guide-box {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
             background: var(--section-alt);
+            border: 1px dashed var(--border-dotted);
             border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+        }
+        .dp-guide-icon { font-size: 2rem; flex-shrink: 0; }
+        .dp-guide-text h3 { font-size: 0.95rem; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; }
+        .dp-guide-text ol { padding-left: 1.25rem; }
+        .dp-guide-text li { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; line-height: 1.8; margin-bottom: 0.25rem; }
+        .dp-guide-text code { background: var(--badge-bg); color: var(--primary); padding: 0.1rem 0.4rem; border-radius: 0.2rem; font-size: 0.82rem; }
+        [data-theme="dark"] .dp-guide-box { background: var(--section-alt); }
+
+        /* Gallery */
+        .dp-gallery-section { padding: 5rem 0; border-bottom: 1px dashed var(--border-dotted); }
+        .dp-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .dp-slide-item {
+            position: relative;
+            border-radius: 0.5rem;
             overflow: hidden;
+            cursor: pointer;
             border: 1px solid var(--card-border);
-            box-shadow: var(--shadow-hover);
+            background: var(--badge-bg);
+            aspect-ratio: 16/9;
+            transition: all 0.25s;
         }
-
-        .dp-embed-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        .dp-embed-loading {
+        .dp-slide-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
+        .dp-slide-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+        .dp-slide-item:hover img { transform: scale(1.03); }
+        .dp-slide-overlay {
             position: absolute;
             inset: 0;
+            background: rgba(30, 64, 175, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        .dp-slide-item:hover .dp-slide-overlay { opacity: 1; }
+        .dp-slide-num {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.7rem;
+            font-weight: 300;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.2rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Empty state */
+        .dp-empty-state {
+            grid-column: 1 / -1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 5rem 2rem;
+            text-align: center;
+            border: 1px dashed var(--border-dotted);
+            border-radius: 0.75rem;
             background: var(--section-alt);
-            gap: 1rem;
-            transition: opacity 0.4s;
-            pointer-events: none;
+            gap: 0.75rem;
         }
+        .dp-empty-icon { font-size: 3rem; opacity: 0.4; }
+        .dp-empty-state p { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; }
+        .dp-empty-state code { background: var(--badge-bg); color: var(--primary); padding: 0.1rem 0.4rem; border-radius: 0.2rem; font-size: 0.85rem; }
 
-        .dp-embed-loading p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            letter-spacing: 0.05em;
+        .dp-gallery-actions { display: flex; justify-content: center; margin-top: 2rem; }
+
+        /* Lightbox */
+        .dp-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 25, 0.92);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
         }
-
-        .dp-loading-spinner {
-            width: 32px;
-            height: 32px;
-            border: 2px solid var(--border-dotted);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: dp-spin 0.8s linear infinite;
-        }
-
-        @keyframes dp-spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .dp-embed-actions {
+        .dp-lightbox.dp-lb-open { display: flex; }
+        .dp-lb-content {
+            max-width: 85vw;
+            max-height: 85vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 1rem;
-            margin-top: 1.25rem;
-            justify-content: flex-end;
         }
-
-        .dp-fullscreen-btn {
-            font-size: 0.85rem;
+        .dp-lb-content img {
+            max-width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
-
-        /* ── Description Cards ── */
-        .dp-desc-section {
-            padding: 5rem 0;
+        .dp-lb-content p { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-weight: 300; letter-spacing: 0.1em; }
+        .dp-lb-close, .dp-lb-prev, .dp-lb-next {
+            position: fixed;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
+        .dp-lb-close:hover, .dp-lb-prev:hover, .dp-lb-next:hover { background: rgba(255,255,255,0.18); }
+        .dp-lb-close { top: 1.5rem; right: 1.5rem; }
+        .dp-lb-prev { left: 1.5rem; top: 50%; transform: translateY(-50%); }
+        .dp-lb-next { right: 1.5rem; top: 50%; transform: translateY(-50%); }
 
-        .dp-desc-grid {
+        /* Features */
+        .dp-features-section { padding: 5rem 0; }
+        .dp-features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
-
-        .dp-desc-card {
+        .dp-feature-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 0.75rem;
@@ -270,60 +412,28 @@
             box-shadow: var(--shadow);
             transition: all 0.25s;
         }
-
-        .dp-desc-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-2px);
-        }
-
-        .dp-desc-icon {
-            font-size: 1.75rem;
-        }
-
-        .dp-desc-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: 0.01em;
-        }
-
-        .dp-desc-card p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .dp-feature-card:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .dp-feature-num {
+            font-size: 0.7rem;
             font-weight: 300;
-            line-height: 1.7;
+            color: var(--primary);
+            letter-spacing: 0.2em;
+            opacity: 0.8;
         }
-
-        /* Active nav link */
-        .nav-active {
-            color: var(--primary) !important;
-            font-weight: 500 !important;
-        }
-
-        /* Fullscreen embed */
-        .dp-embed-wrapper:fullscreen {
-            border-radius: 0;
-            aspect-ratio: auto;
-            height: 100vh;
-        }
+        .dp-feature-card h3 { font-size: 1rem; font-weight: 600; color: var(--text); }
+        .dp-feature-card p { font-size: 0.83rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .dp-desc-grid {
-                grid-template-columns: 1fr;
-            }
-            .dp-embed-actions {
-                justify-content: stretch;
-                flex-direction: column;
-            }
-            .dp-meta-row {
-                gap: 1rem;
-            }
+            .dp-gallery { grid-template-columns: 1fr; }
+            .dp-features-grid { grid-template-columns: 1fr; }
+            .dp-guide-box { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+            .dp-lb-prev { left: 0.5rem; }
+            .dp-lb-next { right: 0.5rem; }
         }
     </style>
 
-    <!-- ===== n8n 공식 AI 챗봇 ===== -->
+    <!-- n8n 챗봇 -->
     <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
     <div id="n8n-chat-container"></div>
     <script type="module">
@@ -333,33 +443,19 @@
             target: '#n8n-chat-container',
             mode: 'window',
             showWelcomeScreen: true,
-            initialMessages: [
-                '안녕하세요! 데이터 분석가 류주현의 AI 어시스턴트입니다 😊',
-                '프로젝트, 기술 스택, 경력 등에 대해 자유롭게 물어보세요!'
-            ],
+            initialMessages: ['안녕하세요! 데이터 분석가 류주현의 AI 어시스턴트입니다 😊', '프로젝트, 기술 스택, 경력 등에 대해 자유롭게 물어보세요!'],
             i18n: { en: { getStarted: '대화 시작하기', inputPlaceholder: '질문을 입력해주세요...' } },
             theme: { colors: { primary: '#3b82f6', accent: '#3b82f6' } }
         });
     </script>
     <style>
-        :root, body, #n8n-chat-container, .chat-window, .chat-button, .n8n-chat, .chat-wrapper, .chat-window-toggle {
-            --chat--color-primary: #3b82f6 !important;
-            --chat--color-primary-shade-50: #2563eb !important;
-            --chat--color-primary-shade-100: #1d4ed8 !important;
-            --chat--color-secondary: #ffffff !important;
-            --chat--color-background: #ffffff !important;
-            --chat--color-font: #333333 !important;
-            --chat--window--border-radius: 24px !important;
-            --chat--message--border-radius: 20px !important;
-        }
-        #n8n-chat-container div[class*="header"] { background-color: #ffffff !important; color: #333333 !important; border-bottom: 1px solid #f4f4f5 !important; }
-        #n8n-chat-container div[class*="header"] * { color: #333333 !important; fill: #333333 !important; }
-        #n8n-chat-container div[class*="message"] { border: none !important; box-shadow: none !important; }
-        .chat-window-toggle, button[class*="trigger"], button[class*="toggle"], button[class*="chat-button"], #n8n-chat-container button {
-            width: 52px !important; height: 52px !important; background-color: #3b82f6 !important; box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
-        }
-        .chat-window-toggle svg, button[class*="trigger"] svg, #n8n-chat-container button svg { width: 24px !important; height: 24px !important; fill: #ffffff !important; }
-        #n8n-chat-container div[class*="window"] { box-shadow: 0 12px 48px rgba(0,0,0,0.12) !important; border: none !important; }
+        :root,body,#n8n-chat-container,.chat-window,.chat-button,.n8n-chat,.chat-wrapper,.chat-window-toggle{--chat--color-primary:#3b82f6!important;--chat--color-primary-shade-50:#2563eb!important;--chat--color-primary-shade-100:#1d4ed8!important;--chat--color-secondary:#fff!important;--chat--color-background:#fff!important;--chat--color-font:#333!important;--chat--window--border-radius:24px!important;--chat--message--border-radius:20px!important}
+        #n8n-chat-container div[class*="header"]{background:#fff!important;color:#333!important;border-bottom:1px solid #f4f4f5!important}
+        #n8n-chat-container div[class*="header"] *{color:#333!important;fill:#333!important}
+        #n8n-chat-container div[class*="message"]{border:none!important;box-shadow:none!important}
+        .chat-window-toggle,button[class*="trigger"],button[class*="toggle"],button[class*="chat-button"],#n8n-chat-container button{width:52px!important;height:52px!important;background-color:#3b82f6!important;box-shadow:0 4px 12px rgba(59,130,246,.3)!important}
+        .chat-window-toggle svg,button[class*="trigger"] svg,#n8n-chat-container button svg{width:24px!important;height:24px!important;fill:#fff!important}
+        #n8n-chat-container div[class*="window"]{box-shadow:0 12px 48px rgba(0,0,0,.12)!important;border:none!important}
     </style>
 </body>
 </html>
