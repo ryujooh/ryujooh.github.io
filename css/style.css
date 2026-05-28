@@ -20,6 +20,13 @@
     --border-solid: #dde4ef;
     --badge-bg: #f1f5f9;
     --badge-text: #4a5f80;
+    /* Section background tints */
+    --section-alt: #f0f4fb;
+    --section-dark: #0f1e33;
+    --section-dark-text: #e8edf5;
+    --section-dark-muted: #8aabd4;
+    --section-mid: #e8eef8;
+    --keyword-weight: 600;
 }
 
 [data-theme="dark"] {
@@ -41,6 +48,13 @@
     --border-solid: #1a2840;
     --badge-bg: #111e33;
     --badge-text: #93b4d4;
+    /* Section background tints - dark mode */
+    --section-alt: #0b1525;
+    --section-dark: #060b14;
+    --section-dark-text: #e8edf5;
+    --section-dark-muted: #7a92b4;
+    --section-mid: #0d1a2e;
+    --keyword-weight: 600;
 }
 
 * { 
@@ -66,6 +80,11 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    overflow: visible;
+}
+
+main {
+    overflow: visible;
 }
 
 /* Header & Sticky Nav */
@@ -150,6 +169,19 @@ h1 a {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    position: relative;
+}
+
+/* ── Keyword emphasis across the page ── */
+strong, b {
+    font-weight: var(--keyword-weight);
+    color: var(--primary);
+}
+
+.hero-title strong,
+.hero-title b {
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .hero-badge {
@@ -258,6 +290,80 @@ section {
     letter-spacing: 0em;
 }
 
+.section-title strong,
+.section-title b {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* ── Section-level background accents ── */
+
+/* About: subtle blue tint */
+.about-section {
+    background: var(--section-alt);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px dashed var(--border-dotted);
+}
+
+/* Skills: dark block */
+.skills-section {
+    background: var(--section-dark);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: none;
+}
+
+.skills-section .section-tag {
+    color: var(--section-dark-muted);
+}
+
+.skills-section .section-title {
+    color: var(--section-dark-text);
+}
+
+.skills-section .skill-title {
+    color: var(--section-dark-text);
+}
+
+.skills-section .skill-list li {
+    color: var(--section-dark-muted);
+}
+
+.skills-section .skill-list li::before {
+    color: var(--accent);
+}
+
+.skills-section .skill-card {
+    border-color: rgba(255,255,255,0.08);
+    border-style: solid;
+}
+
+.skills-section .skill-card:hover {
+    border-color: var(--primary);
+    background: rgba(96, 165, 250, 0.12);
+}
+
+/* Philosophy: mid blue tint */
+.philosophy-section {
+    background: var(--section-mid);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px dashed var(--border-dotted);
+}
+
 /* About Section */
 .about-grid {
     display: grid;
@@ -279,13 +385,24 @@ section {
 }
 
 .highlight-box {
-    background: transparent;
-    border: 1px dashed var(--border-dotted);
+    background: #ffffff;
+    border: 1px solid var(--border-solid);
     padding: 1.25rem;
     border-radius: 0.5rem;
     display: flex;
     gap: 1rem;
     align-items: flex-start;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.highlight-box:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-hover);
+}
+
+[data-theme="dark"] .highlight-box {
+    background: var(--card-bg);
 }
 
 .highlight-icon {
@@ -305,9 +422,10 @@ section {
 
 .highlight-content h4 {
     font-size: 0.9rem;
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 0.25rem;
     letter-spacing: 0.02em;
+    color: var(--primary);
 }
 
 .highlight-content p {
@@ -324,8 +442,8 @@ section {
 }
 
 .skill-card {
-    background: transparent;
-    border: 1px dashed var(--border-dotted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 0.5rem;
     padding: 1.5rem;
     transition: all 0.25s;
@@ -335,6 +453,7 @@ section {
     transform: translateY(-2px);
     border-color: var(--primary);
     border-style: solid;
+    background: rgba(30, 64, 175, 0.12);
 }
 
 .skill-header {
@@ -350,7 +469,7 @@ section {
 
 .skill-title {
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.02em;
 }
 
@@ -384,8 +503,8 @@ section {
 }
 
 .philosophy-card {
-    background: transparent;
-    border: 1px dashed var(--border-dotted);
+    background: #ffffff;
+    border: 1px solid var(--border-solid);
     border-radius: 0.5rem;
     padding: 1.75rem;
     text-align: center;
@@ -393,33 +512,41 @@ section {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    transition: border-color 0.2s;
+    transition: all 0.25s;
+    box-shadow: var(--shadow);
 }
 
 .philosophy-card:hover {
     border-color: var(--primary);
-    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+[data-theme="dark"] .philosophy-card {
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .philosophy-num {
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
+    width: 34px;
+    height: 34px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 300;
-    font-size: 0.85rem;
-    opacity: 0.8;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
 }
 
 .philosophy-card h3 {
     font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text);
 }
 
 .philosophy-card p {
@@ -441,18 +568,18 @@ section {
     color: var(--text);
     display: flex;
     flex-direction: column;
-    background: transparent;
-    border: 1px dashed var(--border-dotted);
-    border-radius: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem;
     overflow: hidden;
     transition: all 0.25s ease;
+    box-shadow: var(--shadow);
 }
 
 .project-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
     border-color: var(--primary);
-    border-style: solid;
 }
 
 .project-image-wrapper {
@@ -486,8 +613,9 @@ section {
 
 .project-info h3 {
     font-size: 1.05rem;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.01em;
+    color: var(--text);
 }
 
 .project-info p {
@@ -518,10 +646,10 @@ section {
 
 /* Search & Tags */
 .search-section {
-    background: transparent;
+    background: var(--section-alt);
     padding: 3.5rem 2rem;
-    border-radius: 0.5rem;
-    border: 1px dashed var(--border-dotted);
+    border-radius: 0.75rem;
+    border: none;
     margin: 4rem 0;
 }
 
@@ -671,10 +799,11 @@ article {
 
 .post-title { 
     font-size: 2rem; 
-    font-weight: 300; 
-    letter-spacing: 0em; 
+    font-weight: 400; 
+    letter-spacing: -0.01em; 
     line-height: 1.35; 
-    margin-bottom: 0; 
+    margin-bottom: 0;
+    color: var(--text);
 }
 
 .markdown-body { 
@@ -706,9 +835,9 @@ article {
     letter-spacing: 0em;
 }
 
-.markdown-body h1 { font-size: 1.6rem; font-weight: 300; }
-.markdown-body h2 { font-size: 1.35rem; font-weight: 400; border-bottom: 1px dashed var(--border-dotted); padding-bottom: 0.5rem; }
-.markdown-body h3 { font-size: 1.15rem; font-weight: 400; }
+.markdown-body h1 { font-size: 1.6rem; font-weight: 500; }
+.markdown-body h2 { font-size: 1.35rem; font-weight: 600; border-bottom: 1px dashed var(--border-dotted); padding-bottom: 0.5rem; color: var(--primary); }
+.markdown-body h3 { font-size: 1.15rem; font-weight: 600; }
 
 .markdown-body hr {
     margin: 3rem 0;
@@ -717,11 +846,11 @@ article {
 }
 
 .markdown-body blockquote {
-    background: transparent;
-    border-left: 1px solid var(--primary);
+    background: var(--section-alt);
+    border-left: 2px solid var(--primary);
     padding: 1rem 1.5rem;
     margin: 2rem 0;
-    border-radius: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .markdown-body blockquote p {
