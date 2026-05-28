@@ -193,8 +193,13 @@
             background: var(--section-alt);
             border-radius: 0.75rem;
             overflow: hidden;
-            border: 1px solid var(--card-border);
-            box-shadow: var(--shadow-hover);
+            border: 2px solid var(--primary); /* 테두리를 포인트 컬러인 다크블루로 변경 */
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15); /* 은은한 블루 광채 */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .dp-embed-wrapper:hover {
+            border-color: #2563eb; /* 호버 시 선명한 블루 */
+            box-shadow: 0 12px 48px rgba(59, 130, 246, 0.25);
         }
 
         .dp-embed-wrapper iframe {
