@@ -787,14 +787,14 @@ article {
 
 .post-header { 
     max-width: 750px;
-    margin: 0 auto 3rem; 
+    margin: 0 auto 3.5rem; /* 아래 본문과의 간격 확보 */
     border-bottom: 1px dashed var(--border-dotted);
-    padding-bottom: 2rem;
+    padding-bottom: 1.8rem; /* 제목 고정부 하단 여백 추가 (한 라인 정도) */
     position: sticky;
     top: 70px; /* 고정된 헤더(70px) 아래에 딱 붙도록 고정 */
     background-color: var(--bg); /* 스크롤 시 본문 내용이 제목 뒤로 가려지도록 배경색 설정 */
     z-index: 100; /* 본문 텍스트(z-index: static)보다 위에 오도록 설정 */
-    padding-top: 1.5rem; /* 스크롤 고정 시 상단에 여유 공간 확보 */
+    padding-top: 1.8rem; /* 제목 고정부 상단 여백 추가 (한 라인 정도) */
     transition: background-color 0.3s;
 }
 
