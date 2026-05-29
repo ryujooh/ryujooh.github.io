@@ -790,6 +790,12 @@ article {
     margin: 0 auto 3rem; 
     border-bottom: 1px dashed var(--border-dotted);
     padding-bottom: 2rem;
+    position: sticky;
+    top: 70px; /* 고정된 헤더(70px) 아래에 딱 붙도록 고정 */
+    background-color: var(--bg); /* 스크롤 시 본문 내용이 제목 뒤로 가려지도록 배경색 설정 */
+    z-index: 100; /* 본문 텍스트(z-index: static)보다 위에 오도록 설정 */
+    padding-top: 1.5rem; /* 스크롤 고정 시 상단에 여유 공간 확보 */
+    transition: background-color 0.3s;
 }
 
 .post-header .post-meta {
