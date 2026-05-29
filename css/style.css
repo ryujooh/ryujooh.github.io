@@ -22,7 +22,7 @@
     --badge-text: #4a5f80;
     /* Section background tints */
     --section-alt: #f0f4fb;
-    --section-dark: #0f1e33;
+    --section-dark: #162c46; /* 네이비 바탕을 조금 더 밝게 변경 (#0f1e33 -> #162c46) */
     --section-dark-text: #e8edf5;
     --section-dark-muted: #8aabd4;
     --section-mid: #e8eef8;
@@ -50,7 +50,7 @@
     --badge-text: #93b4d4;
     /* Section background tints - dark mode */
     --section-alt: #0b1525;
-    --section-dark: #060b14;
+    --section-dark: #0c1524; /* 네이비 바탕을 조금 더 밝게 변경 (#060b14 -> #0c1524) */
     --section-dark-text: #e8edf5;
     --section-dark-muted: #7a92b4;
     --section-mid: #0d1a2e;
@@ -798,12 +798,12 @@ article {
 }
 
 .post-title { 
-    font-size: 2rem; 
-    font-weight: 400; 
-    letter-spacing: -0.01em; 
+    font-size: 2.1rem; 
+    font-weight: 700; /* 글씨 두께를 두껍게 변경 (400 -> 700) */
+    letter-spacing: -0.015em; 
     line-height: 1.35; 
     margin-bottom: 0;
-    color: var(--text);
+    color: var(--primary); /* 푸른 색상인 var(--primary) 적용 */
 }
 
 .markdown-body { 
