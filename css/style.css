@@ -7,7 +7,7 @@
     --text-muted: #64748b;
     --card-bg: #ffffff;
     --card-border: #dde4ef;
-    --nav-bg: rgba(248, 250, 252, 0.88);
+    --nav-bg: #f8fafc; /* 투명도를 없애 스크롤 시 콘텐츠가 메뉴 영역 위로 비치지 않도록 고정 */
     --primary: #1e40af;
     --primary-hover: #1d3a9e;
     --primary-gradient: linear-gradient(135deg, #1e40af, #2563eb);
@@ -35,7 +35,7 @@
     --text-muted: #7a92b4;
     --card-bg: #0d1626;
     --card-border: #1a2840;
-    --nav-bg: rgba(7, 12, 23, 0.88);
+    --nav-bg: #070c17; /* 투명도를 없애 스크롤 시 콘텐츠가 메뉴 영역 위로 비치지 않도록 고정 */
     --primary: #60a5fa;
     --primary-hover: #3b82f6;
     --primary-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
