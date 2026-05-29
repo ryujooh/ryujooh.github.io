@@ -89,7 +89,7 @@ main {
 
 /* Header & Sticky Nav */
 header {
-    position: sticky;
+    position: fixed; /* sticky 대신 fixed로 확실하게 고정 */
     top: 0;
     left: 0;
     right: 0;
@@ -781,7 +781,7 @@ footer {
 
 /* Post Detail & Markdown Body Styling */
 article {
-    padding-top: 4rem;
+    padding-top: 7rem; /* fixed 헤더 높이(70px)를 고려하여 상단 여백 확보 */
     margin-bottom: 5rem;
 }
 
