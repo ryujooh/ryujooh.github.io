@@ -202,25 +202,24 @@ h1 a {
 .dp-hero::after {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: calc(50vw - 50% + 2rem); /* 컨테이너 시작점(헤더 제목 시작선)에 정렬 */
+    bottom: 0;
     width: 100%;
-    height: 100%;
-    max-width: 900px;
+    max-width: 600px; /* 텍스트를 너무 가리지 않게 크기 제한 */
+    height: 90%;
     background-image: url('../images/data_wave.png');
     background-size: contain;
-    background-position: center;
+    background-position: left bottom;
     background-repeat: no-repeat;
-    opacity: 0.45; /* 오퍼시티 45% (자연스럽게 조절) */
+    opacity: 0.35; /* 글씨 시독성을 확보하기 위해 더 은은한 투명도(35%)로 설정 */
     mix-blend-mode: screen; /* 검은색 배경 투명화 블렌딩 */
     pointer-events: none;
     z-index: 1;
-    /* 경계 흐리기 (Radial Mask) */
-    mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
-    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
-    /* 회색 톤 적용 (채도 대폭 감소 및 밝기 미세 조정) */
-    filter: saturate(0.1) brightness(1.25);
+    /* 글씨가 있는 우측 및 상단 영역으로 갈수록 아주 투명해지도록 마스크 적용 */
+    mask-image: radial-gradient(circle at bottom left, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: radial-gradient(circle at bottom left, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
+    /* 회색 톤 적용 (채도 대폭 감소 및 자연스러운 세련미 추가) */
+    filter: saturate(0.08) brightness(1.2);
 }
 
 /* ── Keyword emphasis across the page ── */
