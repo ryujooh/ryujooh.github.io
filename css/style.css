@@ -22,11 +22,16 @@
     --badge-text: #4a5f80;
     /* Section background tints */
     --section-alt: #f0f4fb;
-    --section-dark: #162c46; /* 네이비 바탕을 조금 더 밝게 변경 (#0f1e33 -> #162c46) */
-    --section-dark-text: #e8edf5;
-    --section-dark-muted: #8aabd4;
+    --section-dark: #0d2b5c; /* 조금더 푸른 계열의 깊고 프리미엄한 네이비 블루 */
+    --section-dark-text: #f8fafc;
+    --section-dark-muted: #94a3b8;
     --section-mid: #e8eef8;
     --keyword-weight: 600;
+
+    /* Hero Section Specific Variables (Bluer Navy) */
+    --hero-bg: #0d2b5c;
+    --hero-text: #f8fafc;
+    --hero-muted: #94a3b8;
 }
 
 [data-theme="dark"] {
@@ -50,11 +55,16 @@
     --badge-text: #93b4d4;
     /* Section background tints - dark mode */
     --section-alt: #0b1525;
-    --section-dark: #0c1524; /* 네이비 바탕을 조금 더 밝게 변경 (#060b14 -> #0c1524) */
-    --section-dark-text: #e8edf5;
-    --section-dark-muted: #7a92b4;
+    --section-dark: #091d3e; /* 조금더 푸른 계열의 깊고 차분한 다크 블루 */
+    --section-dark-text: #f8fafc;
+    --section-dark-muted: #8aabd4;
     --section-mid: #0d1a2e;
     --keyword-weight: 600;
+
+    /* Hero Section Specific Variables (Bluer Dark Navy) */
+    --hero-bg: #091d3e;
+    --hero-text: #f8fafc;
+    --hero-muted: #8aabd4;
 }
 
 * { 
@@ -165,11 +175,18 @@ h1 a {
 
 /* Hero Section */
 .hero-section {
-    padding: 6rem 0 4rem;
+    padding: 8rem 0 4rem; /* fixed 헤더 높이(70px) 고려 및 여백 증가 */
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     position: relative;
+    background: var(--hero-bg);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50% + 2rem);
+    padding-right: calc(50vw - 50% + 2rem);
+    border-bottom: 1px dashed var(--border-dotted);
+    color: var(--hero-text);
 }
 
 /* ── Keyword emphasis across the page ── */
@@ -179,21 +196,23 @@ strong, b {
 }
 
 .hero-title strong,
-.hero-title b {
+.hero-title b,
+.hero-desc strong,
+.hero-desc b {
     font-weight: 700;
-    color: var(--primary);
+    color: var(--hero-text);
 }
 
 .hero-badge {
     align-self: flex-start;
     padding: 0.25rem 0.75rem;
     background: transparent;
-    border: 1px dashed var(--primary);
+    border: 1px dashed var(--hero-muted);
     border-radius: 2rem;
     font-size: 0.75rem;
     font-weight: 300;
     letter-spacing: 0.1em;
-    color: var(--primary);
+    color: var(--hero-muted);
     opacity: 0.8;
 }
 
@@ -202,16 +221,17 @@ strong, b {
     font-weight: 300;
     line-height: 1.3;
     letter-spacing: -0.01em;
+    color: var(--hero-text);
 }
 
 .hero-title span {
     font-weight: 600;
-    color: var(--primary);
+    color: #60a5fa; /* 푸른 배경에서 잘 보이도록 밝은 라이트 블루 */
 }
 
 .hero-desc {
     font-size: 1.1rem;
-    color: var(--text-muted);
+    color: var(--hero-muted);
     max-width: 700px;
     line-height: 1.8;
 }
@@ -220,6 +240,31 @@ strong, b {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+/* Hero Section Buttons Override for Dark Background */
+.hero-section .btn-primary {
+    background: transparent;
+    color: #60a5fa;
+    border: 1px solid #60a5fa;
+}
+
+.hero-section .btn-primary:hover {
+    background: #60a5fa;
+    color: var(--hero-bg);
+    transform: translateY(-1px);
+}
+
+.hero-section .btn-secondary {
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    color: var(--hero-muted);
+}
+
+.hero-section .btn-secondary:hover {
+    border-color: var(--hero-text);
+    color: var(--hero-text);
+    transform: translateY(-1px);
 }
 
 .btn {
