@@ -34,38 +34,6 @@
     --hero-muted: #94a3b8;
 }
 
-[data-theme="dark"] {
-    --bg: #070c17;
-    --text: #e8edf5;
-    --text-muted: #7a92b4;
-    --card-bg: #0d1626;
-    --card-border: #1a2840;
-    --nav-bg: #070c17; /* 투명도를 없애 스크롤 시 콘텐츠가 메뉴 영역 위로 비치지 않도록 고정 */
-    --primary: #60a5fa;
-    --primary-hover: #3b82f6;
-    --primary-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
-    --secondary: #38bdf8;
-    --accent: #60a5fa;
-    --accent-light: rgba(96, 165, 250, 0.10);
-    --shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.3), 0 1px 4px -1px rgba(0, 0, 0, 0.2);
-    --shadow-hover: 0 12px 28px -6px rgba(59, 130, 246, 0.18), 0 4px 10px -4px rgba(59, 130, 246, 0.08);
-    --border-dotted: #1e3050;
-    --border-solid: #1a2840;
-    --badge-bg: #111e33;
-    --badge-text: #93b4d4;
-    /* Section background tints - dark mode */
-    --section-alt: #0b1525;
-    --section-dark: #040a18; /* 깊고 어두운 밤하늘 톤의 미드나잇 다크 네이비 */
-    --section-dark-text: #f8fafc;
-    --section-dark-muted: #8aabd4;
-    --section-mid: #0d1a2e;
-    --keyword-weight: 600;
-
-    /* Hero Section Specific Variables (Deep Dark Navy) */
-    --hero-bg: #040a18;
-    --hero-text: #f8fafc;
-    --hero-muted: #8aabd4;
-}
 
 * { 
     margin: 0; 
@@ -154,24 +122,6 @@ h1 a {
     color: var(--text);
 }
 
-#theme-toggle {
-    background: var(--badge-bg);
-    border: 1px solid var(--card-border);
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    color: var(--text);
-    transition: all 0.2s;
-}
-#theme-toggle:hover { 
-    transform: scale(1.05);
-    background: var(--card-border);
-}
 
 /* Hero Section */
 .hero-section {
