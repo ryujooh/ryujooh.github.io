@@ -202,19 +202,25 @@ h1 a {
 .dp-hero::after {
     content: "";
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
     height: 100%;
-    max-height: 450px;
+    max-width: 900px;
     background-image: url('../images/data_wave.png');
     background-size: contain;
-    background-position: right bottom;
+    background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.5; /* 오퍼시티 50% */
+    opacity: 0.45; /* 오퍼시티 45% (자연스럽게 조절) */
     mix-blend-mode: screen; /* 검은색 배경 투명화 블렌딩 */
     pointer-events: none;
     z-index: 1;
+    /* 경계 흐리기 (Radial Mask) */
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
+    /* 회색 톤 적용 (채도 대폭 감소 및 밝기 미세 조정) */
+    filter: saturate(0.1) brightness(1.25);
 }
 
 /* ── Keyword emphasis across the page ── */
