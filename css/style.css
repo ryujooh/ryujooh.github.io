@@ -187,6 +187,34 @@ h1 a {
     padding-right: calc(50vw - 50% + 2rem);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--hero-text);
+    overflow: hidden; /* 배경 이미지 영역 제어 */
+}
+
+/* 히어로 내부 콘텐츠가 배경 이미지 위로 오도록 설정 */
+.hero-section > *,
+.dp-hero > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* 데이터 분석을 상징하는 우주 파동 기하학적 배경 이미지 */
+.hero-section::after,
+.dp-hero::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 600px;
+    height: 100%;
+    max-height: 450px;
+    background-image: url('../images/data_wave.png');
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    opacity: 0.5; /* 오퍼시티 50% */
+    mix-blend-mode: screen; /* 검은색 배경 투명화 블렌딩 */
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* ── Keyword emphasis across the page ── */
