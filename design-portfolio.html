@@ -142,11 +142,38 @@
         /* ── Design Portfolio Page Styles ── */
 
         .dp-hero {
-            padding: 5rem 0 3rem;
+            padding: 8rem 0 4rem; /* fixed 헤더 높이(70px) 고려 및 여백 증가 */
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
+            background: var(--section-dark); /* 네이비 배경 적용 */
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding-left: calc(50vw - 50% + 2rem);
+            padding-right: calc(50vw - 50% + 2rem);
             border-bottom: 1px dashed var(--border-dotted);
+            color: var(--section-dark-text); /* 글자색을 밝게 지정 */
+        }
+
+        .dp-hero .hero-badge {
+            color: var(--section-dark-muted);
+            border-color: var(--border-dotted);
+        }
+
+        .dp-hero .hero-title {
+            color: var(--section-dark-text);
+        }
+
+        .dp-hero .hero-title span {
+            color: #60a5fa; /* 네이비 배경에서 잘 보이도록 밝은 블루 지정 */
+        }
+
+        .dp-hero .hero-desc {
+            color: var(--section-dark-muted);
+        }
+
+        .dp-hero .hero-desc strong {
+            color: var(--section-dark-text);
         }
 
         .dp-meta-row {
@@ -159,18 +186,18 @@
 
         .dp-meta-item {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--section-dark-muted); /* 네이비 배경에서 보일 수 있도록 밝은 톤 지정 */
             font-weight: 300;
             letter-spacing: 0.05em;
         }
 
         .dp-ext-link {
             font-size: 0.8rem;
-            color: var(--primary);
+            color: #60a5fa; /* 네이비 배경에서 선명한 포인트 라이트 블루 */
             text-decoration: none;
             font-weight: 400;
             letter-spacing: 0.03em;
-            border-bottom: 1px dashed var(--primary);
+            border-bottom: 1px dashed #60a5fa;
             padding-bottom: 1px;
             transition: opacity 0.2s;
         }
