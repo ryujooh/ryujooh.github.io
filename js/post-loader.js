@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const { metadata, body } = parseFrontMatter(content);
 
         // Update Title & Meta
-        document.title = `${metadata.title || filename} | Ryu. Archive`;
+        document.title = `${metadata.title || filename} | Ryujooh's Data Lab`;
         const titleEl = document.getElementById('post-title');
         const metaEl = document.getElementById('post-meta');
         
