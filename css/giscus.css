@@ -1,0 +1,23 @@
+/* css/giscus.css - Custom Giscus Theme */
+main {
+  --color-canvas-default: #ffffff !important;    /* 화이트 바탕 */
+  --color-canvas-subtle: #f8fafc !important;     /* 보조 배경 */
+  
+  --color-border-default: #08142c !important;    /* 네이비 라인 */
+  --color-border-muted: #dde4ef !important;      /* 연한 구분선 */
+  
+  --color-accent-fg: #1e40af !important;         /* 진 블루 텍스트/액센트 */
+  --color-accent-emphasis: #1e40af !important;
+  
+  --color-btn-primary-bg: #1e40af !important;     /* 진 블루 버튼 */
+  --color-btn-primary-border: #1e40af !important;
+  --color-btn-primary-text: #ffffff !important;
+  --color-btn-primary-hover-bg: #1d3a9e !important;
+  --color-btn-primary-hover-border: #1d3a9e !important;
+  --color-btn-active-bg: #1d3a9e !important;
+  --color-btn-active-border: #1d3a9e !important;
+  
+  --color-fg-default: #0f1e33 !important;        /* 기본 텍스트 */
+  --color-fg-muted: #64748b !important;          /* 보조 텍스트 */
+  --color-fg-subtle: #94a3b8 !important;
+}
