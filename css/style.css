@@ -781,21 +781,31 @@ article {
 }
 
 .post-header { 
-    max-width: 750px;
-    margin: 0 auto 3.5rem; /* 아래 본문과의 간격 확보 */
-    border-bottom: 1px solid var(--border-solid);
-    padding-bottom: 1.8rem; /* 제목 고정부 하단 여백 추가 (한 라인 정도) */
     position: sticky;
     top: 70px; /* 고정된 헤더(70px) 아래에 딱 붙도록 고정 */
-    background-color: var(--bg); /* 스크롤 시 본문 내용이 제목 뒤로 가려지도록 배경색 설정 */
-    z-index: 100; /* 본문 텍스트(z-index: static)보다 위에 오도록 설정 */
-    padding-top: 1.8rem; /* 제목 고정부 상단 여백 추가 (한 라인 정도) */
+    z-index: 100; /* 본문 텍스트보다 위에 오도록 설정 */
+    background-color: var(--hero-bg); /* 메인의 네이비 배경 적용 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* 딥네이비에 맞는 세련된 하단선 */
+    margin-top: 0;
+    margin-bottom: 3.5rem; /* 아래 본문과의 간격 확보 */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-top: 2.8rem; /* 제목 고정부 상단 여백 증가 */
+    padding-bottom: 2.8rem; /* 제목 고정부 하단 여백 증가 */
+    padding-left: calc(50vw - 50% + 1.5rem);
+    padding-right: calc(50vw - 50% + 1.5rem);
     transition: background-color 0.3s;
 }
 
 .post-header .post-meta {
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
     margin-bottom: 0;
+    color: #60a5fa; /* 하늘색 변경 */
+    font-weight: 600; /* 조금 두껍게 변경 */
+    letter-spacing: 0.03em;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post-title { 
@@ -804,7 +814,10 @@ article {
     letter-spacing: -0.015em; 
     line-height: 1.35; 
     margin-bottom: 0;
-    color: var(--primary); /* 푸른 색상인 var(--primary) 적용 */
+    color: #ffffff; /* 텍스트 화이트로 변경 */
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .markdown-body { 
