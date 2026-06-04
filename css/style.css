@@ -787,7 +787,7 @@ article {
     background-color: var(--hero-bg); /* 메인의 네이비 배경 적용 */
     border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* 딥네이비에 맞는 세련된 하단선 */
     margin-top: 0;
-    margin-bottom: 3.5rem; /* 아래 본문과의 간격 확보 */
+    margin-bottom: 5.5rem; /* 아래 본문과의 간격 확보 (여백 약 2줄 추가) */
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     padding-top: 2.8rem; /* 제목 고정부 상단 여백 증가 */
