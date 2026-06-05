@@ -334,6 +334,11 @@ section {
     margin-bottom: 0.25rem; /* 줄간격 축소 */
 }
 
+.skills-section .skill-list li strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
 .skills-section .skill-list li::before {
     color: var(--accent);
 }
