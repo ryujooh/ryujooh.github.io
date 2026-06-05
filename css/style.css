@@ -330,7 +330,8 @@ section {
 }
 
 .skills-section .skill-list li {
-    color: var(--section-dark-muted);
+    color: #cbd5e1; /* 더 밝게 변경 */
+    margin-bottom: 0.25rem; /* 줄간격 축소 */
 }
 
 .skills-section .skill-list li::before {
