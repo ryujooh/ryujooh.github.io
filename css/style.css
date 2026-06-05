@@ -331,7 +331,7 @@ section {
 
 .skills-section .skill-list li {
     color: #cbd5e1; /* 더 밝게 변경 */
-    margin-bottom: 0.25rem; /* 줄간격 축소 */
+    margin-bottom: 0.8rem; /* 아이템 간 간격 조절 */
 }
 
 .skills-section .skill-list li strong {
