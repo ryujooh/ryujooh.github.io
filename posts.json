@@ -1,7 +1,7 @@
 [
   {
     "file": "seoul-apartment-eda.md",
-    "title": "서울시 아파트 실거래가 탐색적 데이터 분석 (EDA)",
+    "title": "서울시 부동산 실거래가 탐색적 데이터 분석 (EDA)",
     "date": "2026-06-09",
     "tags": [
       "pandas",
