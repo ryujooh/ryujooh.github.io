@@ -74,7 +74,7 @@ tags: ["pandas", "EDA", "시각화", "아파트실거래가"]
 ### ③ 지도 기반 가격 시각화
 서울시 행정구역 경계 지도상에 자치구별 1㎡당 평균 단가를 시각화하여 지리적 가격 격차를 직관적으로 파악할 수 있도록 구현했습니다.
 
-<iframe src="../images/B3_seoul_price_map.html" width="100%" height="550" style="border: 1px solid #ddd; border-radius: 8px;"></iframe>
+<iframe src="images/B3_seoul_price_map.html" width="100%" height="550" style="border: 1px solid #ddd; border-radius: 8px;"></iframe>
 
 > **인사이트 💡**
 > 지도 시각화상으로 한강을 중심으로 한 한남/용산 및 강남·서초·송파 일대(동남권)가 매우 붉은색(고단가)으로 집중되어 있는 반면, 서울 외곽 및 북부 지역은 상대적으로 옅은 노란색을 띠고 있어 서울 내의 지리적 가격 편향성이 시각적으로 극명하게 확인됩니다.
